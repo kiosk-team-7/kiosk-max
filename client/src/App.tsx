@@ -1,3 +1,11 @@
+import CategoryTab from "./components/CategoryTab";
+import MenuList from "./components/MenuList";
+
 export default function App() {
-  return <div className="App">Hello, world!</div>;
+  return (
+    <>
+      <CategoryTab />
+      <MenuList />
+    </>
+  );
 }
