@@ -1,0 +1,43 @@
+.Tab {
+  overflow-x: scroll;
+  user-select: none;
+}
+
+.Tab::-webkit-scrollbar,
+.Tab::-webkit-scrollbar-thumb,
+.Tab::-webkit-scrollbar-track {
+  display: none;
+}
+
+.TabContainer {
+  display: flex;
+}
+
+.TabItem {
+  flex-shrink: 0;
+  width: calc(100% / 3.2);
+  height: 80px;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-right: 0px;
+}
+
+.CurrentTabItem {
+  flex-shrink: 0;
+  width: calc(100% / 3.2);
+  height: 80px;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-right: 0px;
+  color: red;
+}
+
+.TabItem:last-child {
+  border-right: 1px solid black;
+}

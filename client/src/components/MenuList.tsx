@@ -41,7 +41,7 @@ export default function MenuList() {
     <main>
       <ul>
         {menus.map((menu) => (
-          <MenuItem menu={menu} />
+          <MenuItem key={menu.id} menu={menu} />
         ))}
       </ul>
     </main>
