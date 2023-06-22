@@ -7,8 +7,8 @@ interface MenuListProps {
 
 export default function MenuList({ menus }: MenuListProps) {
   return (
-    <main className={style.AnimateIn}>
-      <ul>
+    <main className={`${style.MenuList} ${style.AnimateIn}`}>
+      <ul className={style.MenuListContainer}>
         {menus.map((menu) => (
           <MenuItem key={menu.id} menu={menu} />
         ))}

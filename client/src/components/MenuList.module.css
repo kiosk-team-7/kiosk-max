@@ -29,3 +29,15 @@
     opacity: 0;
   }
 }
+
+.MenuList {
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.MenuListContainer {
+  padding: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 100px;
+}

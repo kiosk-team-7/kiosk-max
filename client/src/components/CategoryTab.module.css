@@ -1,6 +1,7 @@
 .Tab {
   overflow-x: scroll;
   user-select: none;
+  flex-shrink: 0;
 }
 
 .Tab::-webkit-scrollbar,
