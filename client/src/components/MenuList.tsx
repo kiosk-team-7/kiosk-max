@@ -3,7 +3,7 @@ import style from "./MenuList.module.css";
 
 interface MenuListProps {
   menus: Menu[];
-  handleMenuItemClick: () => void;
+  handleMenuItemClick: (menu: Menu) => void;
 }
 
 export default function MenuList({ menus, handleMenuItemClick }: MenuListProps) {
@@ -11,7 +11,7 @@ export default function MenuList({ menus, handleMenuItemClick }: MenuListProps) 
     <main className={`${style.MenuList} ${style.AnimateIn}`}>
       <ul className={style.MenuListContainer}>
         {menus.map((menu) => (
-          <MenuItem key={menu.id} menu={menu} handleMenuItemClick={handleMenuItemClick}/>
+          <MenuItem key={menu.id} menu={menu} handleMenuItemClick={handleMenuItemClick} />
         ))}
       </ul>
     </main>
