@@ -12,6 +12,9 @@ export default function App() {
   const [beverages, setBeverages] = useState<Beverage[]>([]);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
 
+  const categories = beverages.map((beverage) => beverage.category) ?? [];
+  const currentMenus = beverages[currentCategoryIndex]?.menus ?? [];
+
   useEffect(() => {
     let ignore = false;
 
@@ -35,9 +38,6 @@ export default function App() {
     };
   }, []);
 
-  const categories = beverages.map((beverage) => beverage.category) ?? [];
-  const currentMenus = beverages[currentCategoryIndex]?.menus ?? [];
-
   const handleCategoryChange = (index: number) => {
     setCurrentCategoryIndex(index);
   };
@@ -47,9 +47,9 @@ export default function App() {
       <CategoryTab //
         categories={categories}
         currentCategoryIndex={currentCategoryIndex}
-        onClick={handleCategoryChange}
+        handleCategoryChange={handleCategoryChange}
       />
-      <MenuList menus={currentMenus} />
+      <MenuList key={currentCategoryIndex} menus={currentMenus} />
     </div>
   );
 }

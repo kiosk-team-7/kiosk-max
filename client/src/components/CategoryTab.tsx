@@ -1,13 +1,14 @@
 import { useRef, useState } from "react";
 import style from "./CategoryTab.module.css";
+// import { currentCategory } from "../App";
 
 interface CategoryTabProps {
   categories: string[];
   currentCategoryIndex: number;
-  onClick: (index: number) => void;
+  handleCategoryChange: (index: number) => void;
 }
 
-export default function CategoryTab({ categories, currentCategoryIndex, onClick }: CategoryTabProps) {
+export default function CategoryTab({ categories, currentCategoryIndex, handleCategoryChange }: CategoryTabProps) {
   const [scrollPosition, setScrollPosition] = useState(0);
   const isDraggingRef = useRef(false);
   const startXRef = useRef(0);
@@ -72,7 +73,9 @@ export default function CategoryTab({ categories, currentCategoryIndex, onClick 
               key={category}
               name={category}
               isCurrentCategory={isCurrentCategory}
-              onClick={() => {onClick(index)}}
+              handleCategoryChange={() => {
+                handleCategoryChange(index);
+              }}
             />
           );
         })}
@@ -84,13 +87,13 @@ export default function CategoryTab({ categories, currentCategoryIndex, onClick 
 interface TabItemProps {
   name: string;
   isCurrentCategory: boolean;
-  onClick: () => void;
+  handleCategoryChange: () => void;
 }
 
-function TabItem({ name, isCurrentCategory, onClick }: TabItemProps) {
+function TabItem({ name, isCurrentCategory, handleCategoryChange }: TabItemProps) {
   const tabItemClass = isCurrentCategory ? style.CurrentTabItem : style.TabItem;
   return (
-    <li className={tabItemClass} onClick={onClick}>
+    <li className={tabItemClass} onClick={handleCategoryChange}>
       {name}
     </li>
   );
