@@ -1,18 +1,17 @@
 import { useRef, useState } from "react";
 import style from "./CategoryTab.module.css";
 
-export default function CategoryTab() {
-  const [currentCategory, setCurrentCategory] = useState("커피");
+interface CategoryTabProps {
+  categories: string[];
+  currentCategoryIndex: number;
+  onClick: (index: number) => void;
+}
+
+export default function CategoryTab({ categories, currentCategoryIndex, onClick }: CategoryTabProps) {
   const [scrollPosition, setScrollPosition] = useState(0);
   const isDraggingRef = useRef(false);
   const startXRef = useRef(0);
   const tabContainerRef = useRef<HTMLUListElement>(null);
-
-  const categories = ["커피", "라떼", "티", "쥬스", "디카페인"];
-
-  const handleTabItemClick = (category: string) => {
-    setCurrentCategory(category);
-  };
 
   const handleMouseDown = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     isDraggingRef.current = true;
@@ -65,15 +64,15 @@ export default function CategoryTab() {
       onMouseLeave={handleMouseLeave}
     >
       <ul className={style.TabContainer} style={scrollableStyle} ref={tabContainerRef}>
-        {categories.map((category) => {
-          const isCurrentCategory = category === currentCategory;
+        {categories.map((category, index) => {
+          const isCurrentCategory = index === currentCategoryIndex;
 
           return (
             <TabItem
               key={category}
               name={category}
               isCurrentCategory={isCurrentCategory}
-              handleTabItemClick={handleTabItemClick}
+              onClick={() => {onClick(index)}}
             />
           );
         })}
@@ -85,12 +84,13 @@ export default function CategoryTab() {
 interface TabItemProps {
   name: string;
   isCurrentCategory: boolean;
-  handleTabItemClick: (category: string) => void;
+  onClick: () => void;
 }
 
-function TabItem({ name, isCurrentCategory, handleTabItemClick }: TabItemProps) {
+function TabItem({ name, isCurrentCategory, onClick }: TabItemProps) {
+  const tabItemClass = isCurrentCategory ? style.CurrentTabItem : style.TabItem;
   return (
-    <li className={isCurrentCategory ? style.CurrentTabItem : style.TabItem} onClick={() => handleTabItemClick(name)}>
+    <li className={tabItemClass} onClick={onClick}>
       {name}
     </li>
   );
