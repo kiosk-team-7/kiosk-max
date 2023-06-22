@@ -41,6 +41,6 @@ CREATE TABLE IF NOT EXISTS category (
 CREATE TABLE IF NOT EXISTS menu_rank (
     id      bigint   NOT NULL auto_increment,
     menu_id bigint   NOT NULL,
-    sell_at datetime NOT NULL,
+    sell_at date NOT NULL,
     PRIMARY KEY(id)
 );

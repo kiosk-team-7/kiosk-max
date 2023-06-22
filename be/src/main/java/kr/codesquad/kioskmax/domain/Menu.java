@@ -2,12 +2,26 @@ package kr.codesquad.kioskmax.domain;
 
 import java.time.LocalDateTime;
 
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
 public class Menu {
 
-    Long id;
-    Long categoryId;
-    String name;
-    Long price;
-    String image;
-    LocalDateTime createdDateTime;
+    private final Long id;
+    private final Long categoryId;
+    private final String name;
+    private final Long price;
+    private final String image;
+    private final LocalDateTime createdDateTime;
+
+    @Builder
+    public Menu(Long id, Long categoryId, String name, Long price, String image, LocalDateTime createdDateTime) {
+        this.id = id;
+        this.categoryId = categoryId;
+        this.name = name;
+        this.price = price;
+        this.image = image;
+        this.createdDateTime = createdDateTime;
+    }
 }

@@ -1,6 +1,9 @@
 package kr.codesquad.kioskmax.service.dto;
 
 import java.util.List;
+
+import kr.codesquad.kioskmax.domain.Category;
+import kr.codesquad.kioskmax.domain.Menu;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,5 +21,13 @@ public class CategoryInformation {
         this.id = id;
         this.name = name;
         this.menuInformations = menuInformations;
+    }
+
+    public static CategoryInformation of(Category category, List<Menu> menus){
+        return CategoryInformation.builder()
+            .id(category.getId())
+            .name(category.getName())
+            .menuInformations(MenuInformation.from(menus))
+            .build();
     }
 }
