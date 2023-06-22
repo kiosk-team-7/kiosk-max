@@ -2,14 +2,13 @@ package kr.codesquad.kioskmax.controller;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import kr.codesquad.kioskmax.service.CategoryService;
 import kr.codesquad.kioskmax.service.dto.CategoryInformation;
-import kr.codesquad.kioskmax.service.dto.CategoryInformationCollection;
 import kr.codesquad.kioskmax.service.dto.MenuInformation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,11 +48,8 @@ class CategoryControllerTest {
             .name("커피")
             .menuInformations(menuInformations)
             .build());
-        CategoryInformationCollection categoryInformationCollection = CategoryInformationCollection.builder()
-            .categoryInformations(categoryInformations)
-            .build();
 
-        given(categoryService.findAllCategories()).willReturn(categoryInformationCollection);
+        given(categoryService.findAllCategories()).willReturn(categoryInformations);
 
         // when
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/categories"));
