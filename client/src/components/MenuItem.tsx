@@ -1,11 +1,5 @@
 interface MenuProps {
-  menu: {
-    id: number;
-    name: string;
-    price: number;
-    isPopular: boolean;
-    src: string;
-  };
+  menu: Menu;
 }
 
 export default function MenuItem({ menu }: MenuProps) {
