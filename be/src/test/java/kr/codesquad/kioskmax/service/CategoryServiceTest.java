@@ -1,27 +1,24 @@
 package kr.codesquad.kioskmax.service;
 
-import static org.mockito.BDDMockito.*;
+import static org.mockito.BDDMockito.given;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
+import kr.codesquad.kioskmax.annotation.ServiceTest;
 import kr.codesquad.kioskmax.domain.Category;
 import kr.codesquad.kioskmax.domain.Menu;
 import kr.codesquad.kioskmax.repository.CategoryRepository;
 import kr.codesquad.kioskmax.repository.MenuRepository;
 import kr.codesquad.kioskmax.service.dto.CategoryInformation;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
-@ExtendWith(MockitoExtension.class)
+@ServiceTest
 class CategoryServiceTest {
 
 	@InjectMocks
@@ -32,7 +29,6 @@ class CategoryServiceTest {
 
 	@Mock
 	private CategoryRepository categoryRepository;
-
 
 	@Test
 	@DisplayName("DB에서 카테고리별 메뉴를 가져올수 있다. ")
@@ -64,7 +60,7 @@ class CategoryServiceTest {
 			.categoryId(1L)
 			.name("Menu1")
 			.price(5000L)
-			.image("menu1.jpg")
+			.imageSrc("menu1.jpg")
 			.createdDateTime(LocalDateTime.now())
 			.build();
 
@@ -73,7 +69,7 @@ class CategoryServiceTest {
 			.categoryId(1L)
 			.name("Menu2")
 			.price(6000L)
-			.image("menu2.jpg")
+			.imageSrc("menu2.jpg")
 			.createdDateTime(LocalDateTime.now())
 			.build();
 		return new ArrayList<>(Arrays.asList(menu1,menu2));
@@ -85,7 +81,7 @@ class CategoryServiceTest {
 				.categoryId(2L)
 				.name("Menu3")
 				.price(7000L)
-				.image("menu3.jpg")
+				.imageSrc("menu3.jpg")
 				.createdDateTime(LocalDateTime.now())
 				.build();
 
@@ -94,11 +90,11 @@ class CategoryServiceTest {
 				.categoryId(2L)
 				.name("Menu4")
 				.price(8000L)
-				.image("menu4.jpg")
+				.imageSrc("menu4.jpg")
 				.createdDateTime(LocalDateTime.now())
 				.build();
 		return new ArrayList<>(Arrays.asList(menu3,menu4));
-		}
+	}
 
 	List<Menu> thirdCategoryMenuDummy(){
 		Menu menu5 = Menu.builder()
@@ -106,7 +102,7 @@ class CategoryServiceTest {
 			.categoryId(3L)
 			.name("Menu5")
 			.price(9000L)
-			.image("menu5.jpg")
+			.imageSrc("menu5.jpg")
 			.createdDateTime(LocalDateTime.now())
 			.build();
 		return new ArrayList<>(Arrays.asList(menu5));
@@ -133,6 +129,4 @@ class CategoryServiceTest {
 
 		return new ArrayList<>(Arrays.asList(category1,category2,category3));
 	}
-
-
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import kr.codesquad.kioskmax.annotation.RepositoryTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,8 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import kr.codesquad.kioskmax.domain.Menu;
 
-@JdbcTest
-@ActiveProfiles("test")
+@RepositoryTest
 class MenuRepositoryTest {
 
 	private final MenuRepository repository;
@@ -36,6 +36,5 @@ class MenuRepositoryTest {
 		Assertions.assertThat(actual.size()).isEqualTo(2);
 		Assertions.assertThat(actual.get(0).getName()).isEqualTo("카페모카");
 		Assertions.assertThat(actual.get(1).getName()).isEqualTo("아메리카노");
-
 	}
 }

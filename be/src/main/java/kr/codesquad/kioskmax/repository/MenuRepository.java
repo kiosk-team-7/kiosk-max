@@ -21,14 +21,13 @@ public class MenuRepository {
     }
 
     public List<Menu> findAllByCategoryId(Long categoryId) {
-        String sql = "SELECT m.id, m.category_id, m.name, m.price, m.image, m.create_at "
+        String sql = "SELECT m.id, m.category_id, m.name, m.price, m.image_src, m.create_at "
                      + "FROM menu m "
                      + "LEFT OUTER JOIN (SELECT menu_id, COUNT(menu_id) AS menu_count "
             + "                            FROM menu_rank "
             + "                           WHERE sell_at = :now "
             + "                           GROUP BY menu_id ) mr ON mr.menu_id = m.id "
-                    + "INNER JOIN category c ON c.id = m.category_id "
-                    + "WHERE c.id = :categoryId "
+                    + "WHERE m.category_id = :categoryId "
                     + "ORDER BY menu_count DESC";
 
         return jdbcTemplate.query(sql, Map.of("categoryId", categoryId, "now", LocalDate.now()), menuMapper);
@@ -39,8 +38,7 @@ public class MenuRepository {
         .categoryId(rs.getLong("category_id"))
         .name(rs.getString("name"))
         .price(rs.getLong("price"))
-        .image(rs.getString("image"))
+        .imageSrc(rs.getString("image_src"))
         .createdDateTime(rs.getTimestamp("create_at").toLocalDateTime())
         .build();
-
 }

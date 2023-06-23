@@ -15,15 +15,15 @@ public class MenuResponse {
     private final Long categoryId;
     private final String name;
     private final Long price;
-    private final String image;
+    private final String imageSrc;
 
     @Builder
-    public MenuResponse(Long id, Long categoryId, String name, Long price, String image) {
+    public MenuResponse(Long id, Long categoryId, String name, Long price, String imageSrc) {
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;
         this.price = price;
-        this.image = image;
+        this.imageSrc = imageSrc;
     }
 
     public static List<MenuResponse> from(List<MenuInformation> menuInformations) {
@@ -38,7 +38,7 @@ public class MenuResponse {
             .categoryId(menuInformation.getCategoryId())
             .name(menuInformation.getName())
             .price(menuInformation.getPrice())
-            .image(menuInformation.getImage())
+            .imageSrc(menuInformation.getImageSrc())
             .build();
     }
 }

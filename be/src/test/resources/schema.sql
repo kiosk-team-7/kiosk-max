@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS menu (
     category_id bigint          NOT NULL,
     name        varchar(20)     NOT NULL,
     price       bigint          NOT NULL,
-    image       varchar(1000),
+    image_src   varchar(1000),
     create_at   datetime        NOT NULL,
     PRIMARY KEY(id)
 );

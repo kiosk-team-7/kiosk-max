@@ -1,0 +1,15 @@
+# 게시판 API
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+## 카테고리 및 메뉴 전체 조회
+
+### 요청
+include::{snippets}/categories/http-request.adoc[]
+
+### 응답
+include::{snippets}/categories/http-response.adoc[]
+include::{snippets}/categories/response-fields.adoc[]

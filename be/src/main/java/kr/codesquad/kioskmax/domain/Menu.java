@@ -12,16 +12,19 @@ public class Menu {
     private final Long categoryId;
     private final String name;
     private final Long price;
-    private final String image;
+    private final String imageSrc;
+    private final Boolean isPopular;
     private final LocalDateTime createdDateTime;
 
     @Builder
-    public Menu(Long id, Long categoryId, String name, Long price, String image, LocalDateTime createdDateTime) {
+    public Menu(Long id, Long categoryId, String name, Long price, String imageSrc, Boolean isPopular,
+        LocalDateTime createdDateTime) {
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;
         this.price = price;
-        this.image = image;
+        this.imageSrc = imageSrc;
+        this.isPopular = isPopular;
         this.createdDateTime = createdDateTime;
     }
 }

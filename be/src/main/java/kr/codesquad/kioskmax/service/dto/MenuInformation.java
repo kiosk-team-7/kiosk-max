@@ -16,15 +16,15 @@ public class MenuInformation {
     private final Long categoryId;
     private final String name;
     private final Long price;
-    private final String image;
+    private final String imageSrc;
 
     @Builder
-    public MenuInformation(Long id, Long categoryId, String name, Long price, String image) {
+    public MenuInformation(Long id, Long categoryId, String name, Long price, String imageSrc) {
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;
         this.price = price;
-        this.image = image;
+        this.imageSrc = imageSrc;
     }
 
     public static List<MenuInformation> from(List<Menu> menus){
@@ -39,7 +39,7 @@ public class MenuInformation {
             .categoryId(menu.getCategoryId())
             .name(menu.getName())
             .price(menu.getPrice())
-            .image(menu.getImage())
+            .imageSrc(menu.getImageSrc())
             .build();
     }
 }
