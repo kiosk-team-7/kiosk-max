@@ -61,7 +61,7 @@ export default function App() {
     setIsCartAdditionModalOpen(true);
   };
 
-  const handleBackdropClick = () => {
+  const closeCartAdditionModal = () => {
     setIsCartAdditionModalOpen(false);
   };
 
@@ -78,7 +78,9 @@ export default function App() {
         handleMenuItemClick={handleMenuItemClick}
         animation={animation}
       />
-      {isCartAdditionModalOpen && <CartAdditionModal menu={selectedMenu} handleBackdropClick={handleBackdropClick} />}
+      {isCartAdditionModalOpen && (
+        <CartAdditionModal menu={selectedMenu} closeCartAdditionModal={closeCartAdditionModal} />
+      )}
     </div>
   );
 }

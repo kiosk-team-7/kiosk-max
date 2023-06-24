@@ -5,7 +5,7 @@ import OptionButton from "./OptionButton";
 
 interface CartAdditionModalProps {
   menu: Menu | null;
-  handleBackdropClick: () => void;
+  closeCartAdditionModal: () => void;
 }
 
 enum Size {
@@ -20,7 +20,7 @@ enum Temperature {
   ICE = 1,
 }
 
-export default function CartAdditionModal({ menu, handleBackdropClick }: CartAdditionModalProps) {
+export default function CartAdditionModal({ menu, closeCartAdditionModal }: CartAdditionModalProps) {
   const [size, setSize] = useState<Size>(Size.UNCHECKED);
   const [temperature, setTemperature] = useState<Temperature>(Temperature.UNCHECKED);
   const [quantity, setQuantity] = useState(1);
@@ -50,9 +50,11 @@ export default function CartAdditionModal({ menu, handleBackdropClick }: CartAdd
 
   return (
     <div className={style.ModalContainer}>
-      <div className={style.Backdrop} onClick={handleBackdropClick}></div>
+      <div className={style.Backdrop} onClick={closeCartAdditionModal}></div>
       <div className={style.Modal}>
-        <div className={style.CloseButton}>X</div>
+        <div className={style.CloseButton} onClick={closeCartAdditionModal}>
+          X
+        </div>
         <div className={style.MenuInfo}>
           <div className={style.MenuItemWrapper}>{menu && <MenuItem menu={menu} />}</div>
           <div className={style.MenuItemOptions}>
