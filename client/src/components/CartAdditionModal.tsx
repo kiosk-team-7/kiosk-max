@@ -52,6 +52,7 @@ export default function CartAdditionModal({ menu, handleBackdropClick }: CartAdd
     <div className={style.ModalContainer}>
       <div className={style.Backdrop} onClick={handleBackdropClick}></div>
       <div className={style.Modal}>
+        <div className={style.CloseButton}>X</div>
         <div className={style.MenuInfo}>
           <div className={style.MenuItemWrapper}>{menu && <MenuItem menu={menu} />}</div>
           <div className={style.MenuItemOptions}>
