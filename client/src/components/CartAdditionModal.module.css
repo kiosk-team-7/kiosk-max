@@ -89,3 +89,16 @@
 .CounterController:active {
   background-color: rgba(0, 0, 0, 0.2);
 }
+
+.AddMenuButton {
+  background-color: #e82444;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.AddMenuButton:disabled {
+  background-color: #cccccc;
+  color: white;
+  cursor: default;
+}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./CartAdditionModal.module.css";
 import MenuItem from "./MenuItem";
 import OptionButton from "./OptionButton";
@@ -9,21 +9,26 @@ interface CartAdditionModalProps {
 }
 
 enum Size {
-  UNCHECKED,
-  BIG,
-  SMALL,
+  UNCHECKED = "UNCHECKED",
+  BIG = 0,
+  SMALL = 1,
 }
 
 enum Temperature {
-  UNCHECKED,
-  HOT,
-  ICE,
+  UNCHECKED = "UNCHECKED",
+  HOT = 0,
+  ICE = 1,
 }
 
 export default function CartAdditionModal({ menu, handleBackdropClick }: CartAdditionModalProps) {
   const [size, setSize] = useState<Size>(Size.UNCHECKED);
   const [temperature, setTemperature] = useState<Temperature>(Temperature.UNCHECKED);
   const [quantity, setQuantity] = useState(1);
+  const [isAllOptionsSelected, setIsAllOptionsSelected] = useState(false);
+
+  useEffect(() => {
+    checkAllOptionsSelected(size, temperature);
+  }, [size, temperature]);
 
   const handlePlusButtonClick = () => {
     setQuantity((q) => q + 1);
@@ -33,6 +38,14 @@ export default function CartAdditionModal({ menu, handleBackdropClick }: CartAdd
     if (quantity > 1) {
       setQuantity((q) => q - 1);
     }
+  };
+
+  const checkAllOptionsSelected = (size: Size, temperature: Temperature) => {
+    if (size === Size.UNCHECKED || temperature === Temperature.UNCHECKED) {
+      return;
+    }
+
+    setIsAllOptionsSelected(true);
   };
 
   return (
@@ -79,7 +92,7 @@ export default function CartAdditionModal({ menu, handleBackdropClick }: CartAdd
             </div>
           </div>
         </div>
-        {/* Add menu button */}
+        <AddMenuButton isAllOptionsSelected={isAllOptionsSelected} />
       </div>
     </div>
   );
@@ -102,5 +115,17 @@ function QuantityCounter({ quantity, handlePlusButtonClick, handleMinusButtonCli
         +
       </button>
     </>
+  );
+}
+
+interface AddMenuButtonProps {
+  isAllOptionsSelected: boolean;
+}
+
+function AddMenuButton({ isAllOptionsSelected }: AddMenuButtonProps) {
+  return (
+    <button className={style.AddMenuButton} disabled={!isAllOptionsSelected}>
+      담기
+    </button>
   );
 }
