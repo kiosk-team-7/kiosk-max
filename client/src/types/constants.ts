@@ -4,13 +4,13 @@ export enum AnimationClass {
 }
 
 export enum Size {
-  UNCHECKED,
+  UNCHECKED = "UNCHECKED",
   BIG = 0,
   SMALL = 1,
 }
 
 export enum Temperature {
-  UNCHECKED,
+  UNCHECKED = "UNCHECKED",
   HOT = 0,
   ICE = 1,
 }
