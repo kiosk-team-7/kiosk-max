@@ -51,6 +51,7 @@ export default function MenuAddModal({ menu, closeModal, addMenuToCart }: MenuAd
     };
 
     addMenuToCart(newCartItem);
+    closeModal();
   };
 
   return (
