@@ -44,7 +44,7 @@ export default function Main({ menus, animation, changePage }: MainProps) {
   return (
     <>
       <MenuList menus={menus} handleMenuItemClick={handleMenuItemClick} animation={animation} />
-      {isMenuAddModalOpen && (
+      {isMenuAddModalOpen && selectedMenu && (
         <MenuAddModal menu={selectedMenu} closeMenuAddModal={closeMenuAddModal} addMenuToCart={addMenuToCart} />
       )}
       {/* <Cart /> */}

@@ -8,7 +8,10 @@ interface Menu {
   imageSrc: string;
 }
 
-interface CartItem extends Menu {
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
   options: {
     size: Size;
     temperature: Temperature;
