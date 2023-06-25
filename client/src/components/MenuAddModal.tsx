@@ -6,11 +6,11 @@ import { Size, Temperature } from "../types/constants";
 
 interface MenuAddModalProps {
   menu: Menu;
-  closeMenuAddModal: () => void;
+  closeModal: () => void;
   addMenuToCart: (item: CartItem) => void;
 }
 
-export default function MenuAddModal({ menu, closeMenuAddModal, addMenuToCart }: MenuAddModalProps) {
+export default function MenuAddModal({ menu, closeModal, addMenuToCart }: MenuAddModalProps) {
   const [size, setSize] = useState<Size>(Size.UNCHECKED);
   const [temperature, setTemperature] = useState<Temperature>(Temperature.UNCHECKED);
   const [count, setCount] = useState(1);
@@ -55,9 +55,9 @@ export default function MenuAddModal({ menu, closeMenuAddModal, addMenuToCart }:
 
   return (
     <div className={styles.ModalContainer}>
-      <div className={styles.Backdrop} onClick={closeMenuAddModal}></div>
+      <div className={styles.Backdrop} onClick={closeModal}></div>
       <div className={styles.Modal}>
-        <div className={styles.CloseButton} onClick={closeMenuAddModal}>
+        <div className={styles.CloseButton} onClick={closeModal}>
           X
         </div>
         <div className={styles.MenuInfo}>
