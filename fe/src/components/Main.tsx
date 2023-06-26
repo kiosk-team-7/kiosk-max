@@ -2,6 +2,7 @@ import { useState } from "react";
 import MenuAddModal from "./MenuAddModal";
 import MenuList from "./MenuList";
 import { AnimationClass } from "../types/constants";
+import Cart from "./Cart";
 
 interface MainProps {
   menus: Menu[];
@@ -47,7 +48,7 @@ export default function Main({ menus, animation, changePage }: MainProps) {
       {isMenuAddModalOpen && selectedMenu && (
         <MenuAddModal menu={selectedMenu} closeModal={closeModal} addMenuToCart={addMenuToCart} />
       )}
-      {/* <Cart /> */}
+      <Cart />
     </>
   );
 }
