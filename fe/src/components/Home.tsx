@@ -19,15 +19,12 @@ export default function Home({ changePage }: HomeProps) {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [animation, setAnimation] = useState<AnimationClass>(AnimationClass.ANIMATE_IN);
 
-  const categories = beverages.map((beverage) => beverage.category) ?? [];
-  const currentMenus = beverages[currentCategoryIndex]?.menus ?? [];
-
   useEffect(() => {
     let ignore = false;
 
     async function fetchBeveragesData() {
       try {
-        const res = await fetch(`${API_URL}/api/categories`);
+        const res = await fetch(`${API_URL}/categories`);
         const data = await res.json();
 
         if (!ignore) {
@@ -44,6 +41,9 @@ export default function Home({ changePage }: HomeProps) {
       ignore = true;
     };
   }, []);
+
+  const categories = beverages.map((beverage) => beverage.category) ?? [];
+  const currentMenus = beverages[currentCategoryIndex]?.menus ?? [];
 
   const handleCategoryChange = (index: number) => {
     setAnimation(AnimationClass.ANIMATE_OUT);
