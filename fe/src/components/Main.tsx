@@ -46,7 +46,9 @@ export default function Main({ menus, animation, changePage }: MainProps) {
     setCartItems([]);
   };
 
-  const removeItem = () => {};
+  const removeItem = (id: number) => {
+    setCartItems(cartItems.filter((item) => item.id !== id));
+  };
 
   return (
     <>

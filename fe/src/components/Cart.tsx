@@ -96,7 +96,7 @@ function CartItem({ id, name, imageSrc, count, price, removeItem }: CartItemProp
       <div>{name}</div>
       <div>{price}</div>
       <div className={styles.ItemCount}>{count}</div>
-      <button className={styles.RemoveButton}>X</button>
+      <button className={styles.RemoveButton} onClick={() => removeItem(id)}>X</button>
     </div>
   );
 }
