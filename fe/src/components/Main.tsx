@@ -42,13 +42,21 @@ export default function Main({ menus, animation, changePage }: MainProps) {
 
   const addMenuToCart = (item: CartItem) => setCartItems(reduceCartItems([...cartItems, item]));
 
+  const removeAllItems = () => {
+    setCartItems([]);
+  };
+
+  const removeItem = () => {};
+
   return (
     <>
       <MenuList menus={menus} handleMenuItemClick={handleMenuItemClick} animation={animation} />
       {isMenuAddModalOpen && selectedMenu && (
         <MenuAddModal menu={selectedMenu} closeModal={closeModal} addMenuToCart={addMenuToCart} />
       )}
-      <Cart />
+      {cartItems.length === 0 && (
+        <Cart cartItems={cartItems} removeItem={removeItem} removeAllItems={removeAllItems} changePage={changePage} />
+      )}
     </>
   );
 }

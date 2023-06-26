@@ -1,0 +1,26 @@
+.ModalContent {
+  text-wrap: nowrap;
+  margin-bottom: 20px;
+}
+
+.ButtonContainer {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+.ConfirmButton {
+  width: 100%;
+  background-color: #e82444;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.CancelButton {
+  width: 100%;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+}
