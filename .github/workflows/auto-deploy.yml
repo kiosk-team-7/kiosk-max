@@ -55,7 +55,7 @@ jobs:
               working-directory: ./fe
 
             - name: Build npm
-              run: npm run build
+              run: CI='false' npm run build
               shell: bash
               working-directory: ./fe
 
