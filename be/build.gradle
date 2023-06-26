@@ -44,10 +44,6 @@ tasks.jar {
 	enabled = false
 }
 
-tasks.jar {
-	enabled = false
-}`
-
 tasks.named('test') {
 	useJUnitPlatform()
 }
