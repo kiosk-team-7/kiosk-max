@@ -41,7 +41,7 @@ class CategoryControllerTest {
         given(categoryService.findAllCategories()).willReturn(List.of(커피_카테고리_정보, 라떼_카테고리_정보));
 
         // when
-        ResultActions resultActions = mockMvc.perform(get("/categories"))
+        ResultActions resultActions = mockMvc.perform(get("/api/categories"))
             .andDo(MockMvcRestDocumentation.document("categories",
                 Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
                 Preprocessors.preprocessResponse(Preprocessors.prettyPrint()),
