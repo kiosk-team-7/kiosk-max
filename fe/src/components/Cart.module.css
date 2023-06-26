@@ -1,0 +1,111 @@
+.Cart {
+  flex-grow: 1;
+  box-sizing: border-box;
+  display: flex;
+  gap: 5%;
+  padding: 5%;
+  height: 50%;
+  border-top: 3px solid black;
+}
+
+.ItemSection {
+  flex: 3;
+  max-height: 100%;
+  overflow-x: auto;
+  border: 1px solid black;
+}
+
+.ItemContainer {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  height: 100%;
+}
+
+.Item {
+  box-sizing: border-box;
+  flex: 0 0 calc(100% / 3);
+  padding: 5%;
+}
+
+.ItemContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.ItemImage {
+  max-width: 100%;
+  height: auto;
+}
+
+.ItemCount {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  aspect-ratio: 1/1;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  background-color: rgb(254,193,61);
+}
+
+.CloseButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  width: 30%;
+  aspect-ratio: 1/1;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: white;
+}
+
+.ButtonSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5%;
+  height: 100%;
+}
+
+.Timer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.CancelAllButton {
+  flex: 2;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.PaymentButton {
+  flex: 4;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  background-color: rgb(229,39,73);
+}

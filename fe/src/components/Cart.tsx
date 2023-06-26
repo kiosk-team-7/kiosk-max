@@ -1,3 +1,5 @@
+import styles from './Cart.module.css';
+
 interface CartProps {
   cartItems: CartItem[];
   removeItem: (id: number) => void;
@@ -10,20 +12,20 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
   // 카드결제 눌렀을 때 로딩인디케이터 띄우는 함수
   // 현금결제 눌렀을 때 현금결제 모달 띄우는 함수
   return (
-    <section>
-      <div>
-        <ul>
+    <section className={styles.Cart}>
+      <div className={styles.ItemSection}>
+        <ul className={styles.ItemContainer}>
           {cartItems.map((cartItem) => (
-            <li key={cartItem.id}>
+            <li className={styles.Item} key={cartItem.id}>
               <CartItem {...cartItem} removeItem={removeItem} />
             </li>
           ))}
         </ul>
       </div>
-      <div>
-        <div>8초 남음</div>
-        <button>전체 취소</button>
-        <button>결제하기</button>
+      <div className={styles.ButtonSection}>
+        <div className={styles.Timer}>8초 남음</div>
+        <button className={styles.CancelAllButton}>전체 취소</button>
+        <button className={styles.PaymentButton}>결제하기</button>
       </div>
     </section>
   );
@@ -40,12 +42,12 @@ interface CartItemProps {
 
 function CartItem({ id, name, imageSrc, count, price, removeItem }: CartItemProps) {
   return (
-    <>
-      <img src={imageSrc} alt={name} />
+    <div className={styles.ItemContent}>
+      <img className={styles.ItemImage} src={imageSrc} alt={name} />
       <div>{name}</div>
       <div>{price}</div>
-      <div>{count}</div>
-      <button>X</button>
-    </>
+      <div className={styles.ItemCount}>{count}</div>
+      <button className={styles.CloseButton}>X</button>
+    </div>
   );
 }
