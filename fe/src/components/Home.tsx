@@ -27,7 +27,7 @@ export default function Home({ changePage }: HomeProps) {
 
     async function fetchBeveragesData() {
       try {
-        const res = await fetch(`${API_URL}/beverages`);
+        const res = await fetch(`${API_URL}/api/categories`);
         const data = await res.json();
 
         if (!ignore) {
