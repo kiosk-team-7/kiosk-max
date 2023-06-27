@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Modal from "./Modal";
 import OptionButton from "./OptionButton";
 import styles from "./Payment.module.css";
@@ -39,9 +40,34 @@ export function PaymentSpinner({ requestPayment }: PaymentSpinnerProps) {
 
 interface CashPaymentModalProps {
   totalPrice: number;
+  closeModal: () => void;
   requestPayment: () => void;
 }
 
-export function CashPaymentModal({ totalPrice, requestPayment }: CashPaymentModalProps) {
-  // 투입 얼마했는지 상태
+export function CashPaymentModal({ totalPrice, closeModal, requestPayment }: CashPaymentModalProps) {
+  const [inputAmount, setInputAmount] = useState(0);
+
+  const inputOptions = [100, 500, 1000, 5000, 10000, 50000];
+
+  return (
+    <Modal>
+      <>
+        <div className={styles.InputOptionContainer}>
+          {inputOptions.map((option) => (
+            <div key={option} className={styles.InputOption}>
+              <OptionButton type={"CashInput"} text={option + "원"} onClick={() => {}} />
+            </div>
+          ))}
+        </div>
+        <div className={styles.OrderPriceContainer}>
+          <div className={styles.OrderPrice}>주문 금액 : <span>{totalPrice}원</span></div>
+          <div className={styles.OrderPrice}>투입 금액 : <span>{inputAmount}원</span></div>
+        </div>
+        <div className={styles.ConfirmButtonContainer}>
+          <button className={`${styles.ConfirmButton} ${styles.CashPaymentCancelButton}`}>결제 취소</button>
+          <button className={`${styles.ConfirmButton} ${styles.CashPaymentConfirmButton}`}>현금 결제하기</button>
+        </div>
+      </>
+    </Modal>
+  );
 }
