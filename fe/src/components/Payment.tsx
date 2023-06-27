@@ -94,7 +94,7 @@ export function CashPaymentModal({ totalPrice, closeModal, requestPayment }: Cas
           </div>
         </div>
         <div className={styles.ConfirmButtonContainer}>
-          <button className={cancelButtonClassName}>결제 취소</button>
+          <button className={cancelButtonClassName} onClick={closeModal}>결제 취소</button>
           <button className={confirmButtonClassName} onClick={handleConfirmButtonClick} disabled={!isPaymentButtonActive}>
             현금 결제하기
           </button>
