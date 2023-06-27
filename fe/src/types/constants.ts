@@ -14,3 +14,8 @@ export enum Temperature {
   HOT = 0,
   ICE = 1,
 }
+
+export enum PaymentType {
+  CARD = 0,
+  CASH = 1,
+}
