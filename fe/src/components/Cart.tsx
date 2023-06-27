@@ -39,7 +39,7 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
   };
 
   const requestPayment = async (inputAmount?: number) => {
-    const totalPrice = cartItems.reduce((acc, item) => acc + item.price, 0);
+    const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.count, 0);
 
     const body: PaymentRequestBody = {
       menus: cartItems.map((item) => {
@@ -64,8 +64,9 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     };
 
     const res = await fetch(`${API_URL}/api/orders`, options);
+    const data = await res.json();
 
-    return await res.json();
+    return data;
   };
 
   const reducedItems = cartItems.reduce((acc: CartItem[], cartItem: CartItem) => {
@@ -89,6 +90,7 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
   };
 
   const selectCardPayment = () => {
+    paymentTypeRef.current = PaymentType.CARD;
     setShowIndicator(true);
   };
 
