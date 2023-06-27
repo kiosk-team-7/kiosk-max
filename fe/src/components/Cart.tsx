@@ -26,7 +26,7 @@ interface PaymentRequestBody {
 
 export default function Cart({ cartItems, removeItem, removeAllItems, changePage }: CartProps) {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const [showIndicator, setShowIndicator] = useState(false);
+  const [isIndicatorVisible, setIsIndicatorVisible] = useState(false);
   const [isRemoveAllItemsModalOpen, setIsRemoveAllItemsModalOpen] = useState(false);
   const paymentTypeRef = useRef<PaymentType>();
 
@@ -91,7 +91,7 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
 
   const selectCardPayment = () => {
     paymentTypeRef.current = PaymentType.CARD;
-    setShowIndicator(true);
+    setIsIndicatorVisible(true);
   };
 
   const selectCashPayment = () => {};
@@ -112,7 +112,9 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
         <button className={styles.CancelAllButton} onClick={openRemoveAllItemsModal}>
           전체 취소
         </button>
-        <button className={styles.PaymentButton}>결제하기</button>
+        <button className={styles.PaymentButton} onClick={openPaymentSelectionModal}>
+          결제하기
+        </button>
       </div>
       {isRemoveAllItemsModalOpen && (
         <RemoveAllItemsConfirmationModal closeModal={closeRemoveAllItemsModal} removeAllItems={removeAllItems} />
@@ -124,7 +126,7 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
           selectCashPayment={selectCashPayment}
         />
       )}
-      {showIndicator && <PaymentSpinner requestPayment={requestPayment} />}
+      {isIndicatorVisible && <PaymentSpinner requestPayment={requestPayment} />}
     </section>
   );
 }
