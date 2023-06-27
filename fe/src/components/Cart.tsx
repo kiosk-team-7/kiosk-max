@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PaymentSelectionModal } from "./Payment";
+import { CashPaymentModal, PaymentSelectionModal } from "./Payment";
 import styles from "./Cart.module.css";
 import Modal from "./Modal";
 
@@ -13,6 +13,7 @@ interface CartProps {
 export default function Cart({ cartItems, removeItem, removeAllItems, changePage }: CartProps) {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isRemoveAllItemsModalOpen, setIsRemoveAllItemsModalOpen] = useState(false);
+  const [isCashPaymentModalOpen, setIsCashPaymentModalOpen] = useState(false);
 
   const openRemoveAllItemsModal = () => {
     setIsRemoveAllItemsModalOpen(true);
@@ -47,7 +48,14 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
 
   const selectCardPayment = () => {};
 
-  const selectCashPayment = () => {};
+  const selectCashPayment = () => {
+    closePaymentSelectionModal();
+    setIsCashPaymentModalOpen(true);
+  };
+
+  const closeCashPaymentModal = () => {
+    setIsCashPaymentModalOpen(false);
+  };
 
   return (
     <section className={styles.Cart}>
@@ -65,7 +73,9 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
         <button className={styles.CancelAllButton} onClick={openRemoveAllItemsModal}>
           전체 취소
         </button>
-        <button className={styles.PaymentButton}>결제하기</button>
+        <button className={styles.PaymentButton} onClick={openPaymentSelectionModal}>
+          결제하기
+        </button>
       </div>
       {isRemoveAllItemsModalOpen && (
         <RemoveAllItemsConfirmationModal closeModal={closeRemoveAllItemsModal} removeAllItems={removeAllItems} />
@@ -76,6 +86,9 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
           selectCardPayment={selectCardPayment}
           selectCashPayment={selectCashPayment}
         />
+      )}
+      {isCashPaymentModalOpen && (
+        <CashPaymentModal totalPrice={0} requestPayment={() => {}} closeModal={closeCashPaymentModal} />
       )}
     </section>
   );
@@ -96,7 +109,9 @@ function CartItem({ id, name, imageSrc, count, price, removeItem }: CartItemProp
       <div>{name}</div>
       <div>{price}</div>
       <div className={styles.ItemCount}>{count}</div>
-      <button className={styles.RemoveButton} onClick={() => removeItem(id)}>X</button>
+      <button className={styles.RemoveButton} onClick={() => removeItem(id)}>
+        X
+      </button>
     </div>
   );
 }
