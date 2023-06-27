@@ -10,7 +10,8 @@ interface HomeProps {
 }
 
 interface KioskData {
-  category: string;
+  id: number;
+  name: string;
   menus: Menu[];
 }
 
@@ -40,7 +41,7 @@ export default function Home({ changePage }: HomeProps) {
     };
   }, []);
 
-  const categories = kioskData.map((beverage) => beverage.category);
+  const categories = kioskData.map((category) => category.name);
   const currentMenus = kioskData[currentCategoryIndex]?.menus ?? [];
 
   const handleCategoryChange = (index: number) => {
