@@ -1,7 +1,7 @@
 import styles from "./OptionButton.module.css";
 
 interface OptionButtonProps {
-  type: "Size" | "Temperature" | "Payment";
+  type: "Size" | "Temperature" | "Payment" | "CashInput";
   text: string;
   isSelected?: boolean;
   onClick: () => void;
@@ -18,6 +18,9 @@ export default function OptionButton({ type, text, isSelected, onClick }: Option
       break;
     case "Payment":
       className = styles.Payment;
+      break;
+    case "CashInput":
+      className = styles.CashInput;
       break;
   }
 

@@ -54,3 +54,14 @@
   justify-content: center;
   cursor: pointer;
 }
+
+.CashInput {
+  background-color: #239290;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
