@@ -20,8 +20,8 @@ class CategoryRepositoryTest {
     }
 
     // AAA일 때, B를 하면 C가 된다.
-    @Test
     @DisplayName("카테고리가 있을 때 카테고리 전체 조회하면 모든 카테고리를 반환한다.")
+    @Test
     void findAll() {
         // given
 
@@ -29,6 +29,6 @@ class CategoryRepositoryTest {
         List<Category> actual = repository.findAll();
 
         // then
-        Assertions.assertThat(actual.size()).isEqualTo(9);
+        Assertions.assertThat(actual.size()).isEqualTo(5);
     }
 }

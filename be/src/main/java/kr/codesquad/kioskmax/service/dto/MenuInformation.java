@@ -17,14 +17,16 @@ public class MenuInformation {
     private final String name;
     private final Long price;
     private final String imageSrc;
+    private final boolean isPopular;
 
     @Builder
-    public MenuInformation(Long id, Long categoryId, String name, Long price, String imageSrc) {
+    public MenuInformation(Long id, Long categoryId, String name, Long price, String imageSrc, boolean isPopular) {
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;
         this.price = price;
         this.imageSrc = imageSrc;
+        this.isPopular = isPopular;
     }
 
     public static List<MenuInformation> from(List<Menu> menus){
@@ -40,6 +42,11 @@ public class MenuInformation {
             .name(menu.getName())
             .price(menu.getPrice())
             .imageSrc(menu.getImageSrc())
+            .isPopular(menu.isPopular())
             .build();
+    }
+
+    public boolean getIsPopular() {
+        return isPopular;
     }
 }
