@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Dim from "./Dim";
 import Modal from "./Modal";
 import OptionButton from "./OptionButton";
 import styles from "./Payment.module.css";
@@ -35,7 +36,12 @@ interface PaymentSpinnerProps {
 }
 
 export function PaymentSpinner({ requestPayment }: PaymentSpinnerProps) {
-  return;
+  return (
+    <Dim>
+      <div className={styles.Spinner}></div>
+      <div className={styles.SpinnerContent}>카드 결제중...</div>
+    </Dim>
+  );
 }
 
 interface CashPaymentModalProps {
@@ -60,8 +66,12 @@ export function CashPaymentModal({ totalPrice, closeModal, requestPayment }: Cas
           ))}
         </div>
         <div className={styles.OrderPriceContainer}>
-          <div className={styles.OrderPrice}>주문 금액 : <span>{totalPrice}원</span></div>
-          <div className={styles.OrderPrice}>투입 금액 : <span>{inputAmount}원</span></div>
+          <div className={styles.OrderPrice}>
+            주문 금액 : <span>{totalPrice}원</span>
+          </div>
+          <div className={styles.OrderPrice}>
+            투입 금액 : <span>{inputAmount}원</span>
+          </div>
         </div>
         <div className={styles.ConfirmButtonContainer}>
           <button className={`${styles.ConfirmButton} ${styles.CashPaymentCancelButton}`}>결제 취소</button>
