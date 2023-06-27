@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dim from "./Dim";
 import Modal from "./Modal";
 import OptionButton from "./OptionButton";
@@ -52,8 +52,23 @@ interface CashPaymentModalProps {
 
 export function CashPaymentModal({ totalPrice, closeModal, requestPayment }: CashPaymentModalProps) {
   const [inputAmount, setInputAmount] = useState(0);
+  const [isPaymentButtonActive, setIsPaymentButtonActive] = useState(false);
+
+  useEffect(() => {
+    if (inputAmount >= totalPrice) {
+      setIsPaymentButtonActive(true);
+    } else {
+      setIsPaymentButtonActive(false);
+    }
+  }, [inputAmount]);
 
   const inputOptions = [100, 500, 1000, 5000, 10000, 50000];
+  const cancelButtonClassName = `${styles.ConfirmButton} ${styles.CashPaymentCancelButton}`;
+  const confirmButtonClassName = `${styles.ConfirmButton} ${styles.CashPaymentConfirmButton}`;
+
+  const increaseInputAmount = (amount: number) => {
+    setInputAmount((i) => i + amount);
+  };
 
   return (
     <Modal>
@@ -61,7 +76,7 @@ export function CashPaymentModal({ totalPrice, closeModal, requestPayment }: Cas
         <div className={styles.InputOptionContainer}>
           {inputOptions.map((option) => (
             <div key={option} className={styles.InputOption}>
-              <OptionButton type={"CashInput"} text={option + "원"} onClick={() => {}} />
+              <OptionButton type={"CashInput"} text={option + "원"} onClick={() => increaseInputAmount(option)} />
             </div>
           ))}
         </div>
@@ -74,8 +89,10 @@ export function CashPaymentModal({ totalPrice, closeModal, requestPayment }: Cas
           </div>
         </div>
         <div className={styles.ConfirmButtonContainer}>
-          <button className={`${styles.ConfirmButton} ${styles.CashPaymentCancelButton}`}>결제 취소</button>
-          <button className={`${styles.ConfirmButton} ${styles.CashPaymentConfirmButton}`}>현금 결제하기</button>
+          <button className={cancelButtonClassName}>결제 취소</button>
+          <button className={confirmButtonClassName} disabled={!isPaymentButtonActive}>
+            현금 결제하기
+          </button>
         </div>
       </>
     </Modal>
