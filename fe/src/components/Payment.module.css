@@ -154,4 +154,9 @@
 
 .CashPaymentConfirmButton {
   background-color: rgb(229, 39, 73);
+  opacity: 1;
+}
+
+.CashPaymentConfirmButton:disabled {
+  opacity: 0.35;
 }
