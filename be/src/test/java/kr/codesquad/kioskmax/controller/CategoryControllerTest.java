@@ -1,9 +1,7 @@
 package kr.codesquad.kioskmax.controller;
 
 import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -17,8 +15,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
-import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -31,8 +27,8 @@ class CategoryControllerTest {
     @MockBean
     private CategoryService categoryService;
 
-    @Test
     @DisplayName("카테고리가 있을 때 카테고리 전체 조회하면 모든 카테고리와 메뉴들을 반환한다.")
+    @Test
     void getCategories() throws Exception {
         // given
         CategoryInformation 커피_카테고리_정보 = 카테고리_정보_생성(1L, "커피", 커피_카테고리_메뉴_정보들_생성());
@@ -41,21 +37,7 @@ class CategoryControllerTest {
         given(categoryService.findAllCategories()).willReturn(List.of(커피_카테고리_정보, 라떼_카테고리_정보));
 
         // when
-        ResultActions resultActions = mockMvc.perform(get("/api/categories"))
-            .andDo(MockMvcRestDocumentation.document("categories",
-                Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
-                Preprocessors.preprocessResponse(Preprocessors.prettyPrint()),
-                responseFields(
-                    fieldWithPath("[]").description("카데고리들"),
-                    fieldWithPath("[].id").description("카테고리 아이디"),
-                    fieldWithPath("[].name").description("카테고리명"),
-                    fieldWithPath("[].menus").description("카테고리 메뉴들"),
-                    fieldWithPath("[].menus[].id").description("메뉴 아이디"),
-                    fieldWithPath("[].menus[].categoryId").description("카테고리 아이디"),
-                    fieldWithPath("[].menus[].name").description("메뉴명"),
-                    fieldWithPath("[].menus[].price").description("메뉴 가격"),
-                    fieldWithPath("[].menus[].imageSrc").description("메뉴 이미지").optional()
-                )));
+        ResultActions resultActions = mockMvc.perform(get("/api/categories"));
 
         // then
         resultActions
@@ -79,7 +61,7 @@ class CategoryControllerTest {
         menuInformations.add(MenuInformation.builder()
             .id(1L)
             .categoryId(1L)
-            .imageSrc("https://image.com")
+            .imageSrc("https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[94]_20210430103337006.jpg")
             .price(4000L)
             .name("아메리카노")
             .build());
@@ -91,16 +73,16 @@ class CategoryControllerTest {
         menuInformations.add(MenuInformation.builder()
             .id(2L)
             .categoryId(2L)
-            .imageSrc("https://image.com")
+            .imageSrc("https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[94]_20210430103337006.jpg")
             .price(4000L)
             .name("모카라떼")
             .build());
         menuInformations.add(MenuInformation.builder()
             .id(3L)
             .categoryId(2L)
-            .imageSrc("https://image.com")
+            .imageSrc("https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[128692]_20210426091933665.jpg")
             .price(4000L)
-            .name("밀크라떼")
+            .name("돌체 라떼")
             .build());
         return menuInformations;
     }

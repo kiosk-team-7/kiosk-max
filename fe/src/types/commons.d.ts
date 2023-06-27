@@ -2,10 +2,11 @@ type Path = "/" | "/result";
 
 interface Menu {
   id: number;
+  categoryId: number;
   name: string;
   price: number;
-  isPopular: boolean;
   imageSrc: string;
+  isPopular: boolean;
 }
 
 interface CartItem {
