@@ -1,3 +1,4 @@
+import Dim from "./Dim";
 import Modal from "./Modal";
 import OptionButton from "./OptionButton";
 import styles from "./Payment.module.css";
@@ -34,7 +35,12 @@ interface PaymentSpinnerProps {
 }
 
 export function PaymentSpinner({ requestPayment }: PaymentSpinnerProps) {
-  return;
+  return (
+    <Dim>
+      <div className={styles.Spinner}></div>
+      <div className={styles.SpinnerContent}>카드 결제중...</div>
+    </Dim>
+  );
 }
 
 interface CashPaymentModalProps {
