@@ -1,7 +1,7 @@
 import styles from "./Dim.module.css";
 
 interface DimProps {
-  children: JSX.Element;
+  children: React.ReactNode;
   onClick?: () => void;
 }
 
