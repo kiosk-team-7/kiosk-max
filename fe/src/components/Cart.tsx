@@ -38,6 +38,10 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     return acc;
   }, []);
 
+  const totalPrice = cartItems.reduce((acc, cartItem) => {
+    return acc + cartItem.price * cartItem.count;
+  }, 0);
+
   const openPaymentSelectionModal = () => {
     setIsPaymentModalOpen(true);
   };
@@ -88,7 +92,7 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
         />
       )}
       {isCashPaymentModalOpen && (
-        <CashPaymentModal totalPrice={0} requestPayment={() => {}} closeModal={closeCashPaymentModal} />
+        <CashPaymentModal totalPrice={totalPrice} requestPayment={() => {}} closeModal={closeCashPaymentModal} />
       )}
     </section>
   );
