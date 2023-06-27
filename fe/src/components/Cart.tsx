@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { CashPaymentModal, PaymentSelectionModal } from "./Payment";
+import { useRef, useState } from "react";
+import { PaymentSelectionModal, PaymentSpinner, CashPaymentModal } from "./Payment";
 import styles from "./Cart.module.css";
 import Modal from "./Modal";
+import { API_URL } from "../constants";
+import { PaymentType, Size, Temperature } from "../types/constants";
 
 interface CartProps {
   cartItems: CartItem[];
@@ -10,10 +12,24 @@ interface CartProps {
   changePage: (path: Path) => void;
 }
 
+interface PaymentRequestBody {
+  menus: {
+    id: number;
+    count: number;
+    size: Size;
+    temperature: Temperature;
+  }[];
+  inputAmount: number;
+  totalPrice: number;
+  paymentType: PaymentType;
+}
+
 export default function Cart({ cartItems, removeItem, removeAllItems, changePage }: CartProps) {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [isIndicatorVisible, setIsIndicatorVisible] = useState(false);
   const [isRemoveAllItemsModalOpen, setIsRemoveAllItemsModalOpen] = useState(false);
   const [isCashPaymentModalOpen, setIsCashPaymentModalOpen] = useState(false);
+  const paymentTypeRef = useRef<PaymentType>();
 
   const openRemoveAllItemsModal = () => {
     setIsRemoveAllItemsModalOpen(true);
@@ -23,8 +39,34 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     setIsRemoveAllItemsModalOpen(false);
   };
 
-  // 카드결제 눌렀을 때 로딩인디케이터 띄우는 함수
-  // 현금결제 눌렀을 때 현금결제 모달 띄우는 함수
+  const requestPayment = async (inputAmount?: number) => {
+    const body: PaymentRequestBody = {
+      menus: cartItems.map((item) => {
+        return {
+          id: item.id,
+          count: item.count,
+          size: item.options.size,
+          temperature: item.options.temperature,
+        };
+      }),
+      inputAmount: inputAmount || totalPrice,
+      totalPrice,
+      paymentType: paymentTypeRef.current!,
+    };
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    };
+
+    const res = await fetch(`${API_URL}/api/orders`, options);
+    const data = await res.json();
+
+    return data;
+  };
 
   const reducedItems = cartItems.reduce((acc: CartItem[], cartItem: CartItem) => {
     const sameItem = acc.find((item) => item.id === cartItem.id);
@@ -50,7 +92,10 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     setIsPaymentModalOpen(false);
   };
 
-  const selectCardPayment = () => {};
+  const selectCardPayment = () => {
+    paymentTypeRef.current = PaymentType.CARD;
+    setIsIndicatorVisible(true);
+  };
 
   const selectCashPayment = () => {
     closePaymentSelectionModal();
@@ -94,6 +139,7 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
       {isCashPaymentModalOpen && (
         <CashPaymentModal totalPrice={totalPrice} requestPayment={() => {}} closeModal={closeCashPaymentModal} />
       )}
+      {isIndicatorVisible && <PaymentSpinner requestPayment={requestPayment} />}
     </section>
   );
 }
