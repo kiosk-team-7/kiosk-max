@@ -43,7 +43,7 @@
 
 /* 결제타입 */
 .Payment {
-  width: 100%;
+  width: 120px;
   background-color: #239290;
   border: 2px solid #239290;
   padding: 10px;

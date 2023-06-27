@@ -16,14 +16,16 @@ public class MenuResponse {
     private final String name;
     private final Long price;
     private final String imageSrc;
+    private final boolean isPopular;
 
     @Builder
-    public MenuResponse(Long id, Long categoryId, String name, Long price, String imageSrc) {
+    public MenuResponse(Long id, Long categoryId, String name, Long price, String imageSrc, boolean isPopular) {
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;
         this.price = price;
         this.imageSrc = imageSrc;
+        this.isPopular = isPopular;
     }
 
     public static List<MenuResponse> from(List<MenuInformation> menuInformations) {
@@ -39,6 +41,11 @@ public class MenuResponse {
             .name(menuInformation.getName())
             .price(menuInformation.getPrice())
             .imageSrc(menuInformation.getImageSrc())
+            .isPopular(menuInformation.getIsPopular())
             .build();
+    }
+
+    public boolean getIsPopular() {
+        return isPopular;
     }
 }

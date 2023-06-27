@@ -9,41 +9,39 @@ interface HomeProps {
   changePage: (path: Path) => void;
 }
 
-interface Beverage {
+interface KioskData {
   category: string;
   menus: Menu[];
 }
 
 export default function Home({ changePage }: HomeProps) {
-  const [beverages, setBeverages] = useState<Beverage[]>([]);
+  const [kioskData, setKioskData] = useState<KioskData[]>([]);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [animation, setAnimation] = useState<AnimationClass>(AnimationClass.ANIMATE_IN);
-
-  const categories = beverages.map((beverage) => beverage.category) ?? [];
-  const currentMenus = beverages[currentCategoryIndex]?.menus ?? [];
 
   useEffect(() => {
     let ignore = false;
 
-    async function fetchBeveragesData() {
+    (async function fetchKioskData() {
       try {
-        const res = await fetch(`${API_URL}/beverages`);
+        const res = await fetch(`${API_URL}/api/categories`);
         const data = await res.json();
 
         if (!ignore) {
-          setBeverages(data);
+          setKioskData(data);
         }
       } catch (error) {
-        console.error("beverages 데이터를 불러오는데 실패했습니다.", error);
+        console.error("키오스크 데이터를 불러오는데 실패했습니다.", error);
       }
-    }
-
-    fetchBeveragesData();
+    })();
 
     return () => {
       ignore = true;
     };
   }, []);
+
+  const categories = kioskData.map((beverage) => beverage.category);
+  const currentMenus = kioskData[currentCategoryIndex]?.menus ?? [];
 
   const handleCategoryChange = (index: number) => {
     setAnimation(AnimationClass.ANIMATE_OUT);

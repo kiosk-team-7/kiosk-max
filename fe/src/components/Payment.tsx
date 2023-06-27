@@ -1,9 +1,33 @@
-interface PaymentModalProps {
+import Modal from "./Modal";
+import OptionButton from "./OptionButton";
+import styles from "./Payment.module.css";
+
+interface PaymentSelectionModalProps {
+  closeModal: () => void;
   selectCardPayment: () => void;
   selectCashPayment: () => void;
 }
 
-export function PaymentModal({ selectCardPayment, selectCashPayment }: PaymentModalProps) {}
+export function PaymentSelectionModal({
+  closeModal,
+  selectCardPayment,
+  selectCashPayment,
+}: PaymentSelectionModalProps) {
+  return (
+    <Modal closeModal={closeModal}>
+      <div className={styles.PaymentContainer}>
+        <div className={styles.PaymentOption}>
+          <div className={styles.PaymentIcon}>💳</div>
+          <OptionButton type={"Payment"} text={"카드결제"} onClick={selectCardPayment} />
+        </div>
+        <div className={styles.PaymentOption}>
+          <div className={styles.PaymentIcon}>💵</div>
+          <OptionButton type={"Payment"} text={"현금결제"} onClick={selectCashPayment} />
+        </div>
+      </div>
+    </Modal>
+  );
+}
 
 interface PaymentSpinnerProps {
   requestPayment: () => void;

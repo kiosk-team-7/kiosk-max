@@ -1,0 +1,45 @@
+.ModalContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.Backdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.Modal {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  padding: 10%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+}
+
+.CloseButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(30%, -30%);
+  cursor: pointer;
+  background-color: white;
+  width: 35px;
+  height: 35px;
+  border: 1px solid black;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  -webkit-user-select: none;
+  user-select: none;
+}

@@ -30,8 +30,8 @@ class CategoryServiceTest {
 	@Mock
 	private CategoryRepository categoryRepository;
 
+	@DisplayName("DB에서 카테고리별 메뉴를 가져올수 있다.")
 	@Test
-	@DisplayName("DB에서 카테고리별 메뉴를 가져올수 있다. ")
 	void findAllCategories() {
 
 		//given
