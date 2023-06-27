@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { PaymentSelectionModal } from "./Payment";
+import { useRef, useState } from "react";
+import { PaymentSelectionModal, PaymentSpinner } from "./Payment";
 import styles from "./Cart.module.css";
 import Modal from "./Modal";
+import { API_URL } from "../constants";
+import { PaymentType, Size, Temperature } from "../types/constants";
 
 interface CartProps {
   cartItems: CartItem[];
@@ -10,9 +12,23 @@ interface CartProps {
   changePage: (path: Path) => void;
 }
 
+interface PaymentRequestBody {
+  menus: {
+    id: number;
+    count: number;
+    size: Size;
+    temperature: Temperature;
+  }[];
+  inputAmount: number;
+  totalPrice: number;
+  paymentType: PaymentType;
+}
+
 export default function Cart({ cartItems, removeItem, removeAllItems, changePage }: CartProps) {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [showIndicator, setShowIndicator] = useState(false);
   const [isRemoveAllItemsModalOpen, setIsRemoveAllItemsModalOpen] = useState(false);
+  const paymentTypeRef = useRef<PaymentType>();
 
   const openRemoveAllItemsModal = () => {
     setIsRemoveAllItemsModalOpen(true);
@@ -22,8 +38,35 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     setIsRemoveAllItemsModalOpen(false);
   };
 
-  // 카드결제 눌렀을 때 로딩인디케이터 띄우는 함수
-  // 현금결제 눌렀을 때 현금결제 모달 띄우는 함수
+  const requestPayment = async (inputAmount?: number) => {
+    const totalPrice = cartItems.reduce((acc, item) => acc + item.price, 0);
+
+    const body: PaymentRequestBody = {
+      menus: cartItems.map((item) => {
+        return {
+          id: item.id,
+          count: item.count,
+          size: item.options.size,
+          temperature: item.options.temperature,
+        };
+      }),
+      inputAmount: inputAmount || totalPrice,
+      totalPrice: totalPrice,
+      paymentType: paymentTypeRef.current!,
+    };
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    };
+
+    const res = await fetch(`${API_URL}/api/orders`, options);
+
+    return await res.json();
+  };
 
   const reducedItems = cartItems.reduce((acc: CartItem[], cartItem: CartItem) => {
     const sameItem = acc.find((item) => item.id === cartItem.id);
@@ -45,7 +88,9 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     setIsPaymentModalOpen(false);
   };
 
-  const selectCardPayment = () => {};
+  const selectCardPayment = () => {
+    setShowIndicator(true);
+  };
 
   const selectCashPayment = () => {};
 
@@ -77,6 +122,7 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
           selectCashPayment={selectCashPayment}
         />
       )}
+      {showIndicator && <PaymentSpinner requestPayment={requestPayment} />}
     </section>
   );
 }
@@ -96,7 +142,9 @@ function CartItem({ id, name, imageSrc, count, price, removeItem }: CartItemProp
       <div>{name}</div>
       <div>{price}</div>
       <div className={styles.ItemCount}>{count}</div>
-      <button className={styles.RemoveButton} onClick={() => removeItem(id)}>X</button>
+      <button className={styles.RemoveButton} onClick={() => removeItem(id)}>
+        X
+      </button>
     </div>
   );
 }
