@@ -47,7 +47,7 @@ export function PaymentSpinner({ requestPayment }: PaymentSpinnerProps) {
 interface CashPaymentModalProps {
   totalPrice: number;
   closeModal: () => void;
-  requestPayment: () => void;
+  requestPayment: (inputAmount:number) => void;
 }
 
 export function CashPaymentModal({ totalPrice, closeModal, requestPayment }: CashPaymentModalProps) {
@@ -70,6 +70,11 @@ export function CashPaymentModal({ totalPrice, closeModal, requestPayment }: Cas
     setInputAmount((i) => i + amount);
   };
 
+  const handleConfirmButtonClick = () => {
+    setIsPaymentButtonActive(false);
+    requestPayment(inputAmount);
+  };
+
   return (
     <Modal>
       <>
@@ -90,7 +95,7 @@ export function CashPaymentModal({ totalPrice, closeModal, requestPayment }: Cas
         </div>
         <div className={styles.ConfirmButtonContainer}>
           <button className={cancelButtonClassName}>결제 취소</button>
-          <button className={confirmButtonClassName} disabled={!isPaymentButtonActive}>
+          <button className={confirmButtonClassName} onClick={handleConfirmButtonClick} disabled={!isPaymentButtonActive}>
             현금 결제하기
           </button>
         </div>
