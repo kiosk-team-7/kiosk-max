@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { CashPaymentModal, PaymentSelectionModal } from "./Payment";
+import { useRef, useState } from "react";
+import { PaymentSelectionModal, PaymentSpinner } from "./Payment";
 import styles from "./Cart.module.css";
 import Modal from "./Modal";
+import { API_URL } from "../constants";
+import { PaymentType, Size, Temperature } from "../types/constants";
 
 interface CartProps {
   cartItems: CartItem[];
@@ -10,10 +12,23 @@ interface CartProps {
   changePage: (path: Path) => void;
 }
 
+interface PaymentRequestBody {
+  menus: {
+    id: number;
+    count: number;
+    size: Size;
+    temperature: Temperature;
+  }[];
+  inputAmount: number;
+  totalPrice: number;
+  paymentType: PaymentType;
+}
+
 export default function Cart({ cartItems, removeItem, removeAllItems, changePage }: CartProps) {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [showIndicator, setShowIndicator] = useState(false);
   const [isRemoveAllItemsModalOpen, setIsRemoveAllItemsModalOpen] = useState(false);
-  const [isCashPaymentModalOpen, setIsCashPaymentModalOpen] = useState(false);
+  const paymentTypeRef = useRef<PaymentType>();
 
   const openRemoveAllItemsModal = () => {
     setIsRemoveAllItemsModalOpen(true);
@@ -23,8 +38,35 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     setIsRemoveAllItemsModalOpen(false);
   };
 
-  // 카드결제 눌렀을 때 로딩인디케이터 띄우는 함수
-  // 현금결제 눌렀을 때 현금결제 모달 띄우는 함수
+  const requestPayment = async (inputAmount?: number) => {
+    const totalPrice = cartItems.reduce((acc, item) => acc + item.price, 0);
+
+    const body: PaymentRequestBody = {
+      menus: cartItems.map((item) => {
+        return {
+          id: item.id,
+          count: item.count,
+          size: item.options.size,
+          temperature: item.options.temperature,
+        };
+      }),
+      inputAmount: inputAmount || totalPrice,
+      totalPrice: totalPrice,
+      paymentType: paymentTypeRef.current!,
+    };
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    };
+
+    const res = await fetch(`${API_URL}/api/orders`, options);
+
+    return await res.json();
+  };
 
   const reducedItems = cartItems.reduce((acc: CartItem[], cartItem: CartItem) => {
     const sameItem = acc.find((item) => item.id === cartItem.id);
@@ -38,10 +80,6 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     return acc;
   }, []);
 
-  const totalPrice = cartItems.reduce((acc, cartItem) => {
-    return acc + cartItem.price * cartItem.count;
-  }, 0);
-
   const openPaymentSelectionModal = () => {
     setIsPaymentModalOpen(true);
   };
@@ -50,16 +88,11 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     setIsPaymentModalOpen(false);
   };
 
-  const selectCardPayment = () => {};
-
-  const selectCashPayment = () => {
-    closePaymentSelectionModal();
-    setIsCashPaymentModalOpen(true);
+  const selectCardPayment = () => {
+    setShowIndicator(true);
   };
 
-  const closeCashPaymentModal = () => {
-    setIsCashPaymentModalOpen(false);
-  };
+  const selectCashPayment = () => {};
 
   return (
     <section className={styles.Cart}>
@@ -77,9 +110,7 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
         <button className={styles.CancelAllButton} onClick={openRemoveAllItemsModal}>
           전체 취소
         </button>
-        <button className={styles.PaymentButton} onClick={openPaymentSelectionModal}>
-          결제하기
-        </button>
+        <button className={styles.PaymentButton}>결제하기</button>
       </div>
       {isRemoveAllItemsModalOpen && (
         <RemoveAllItemsConfirmationModal closeModal={closeRemoveAllItemsModal} removeAllItems={removeAllItems} />
@@ -91,9 +122,7 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
           selectCashPayment={selectCashPayment}
         />
       )}
-      {isCashPaymentModalOpen && (
-        <CashPaymentModal totalPrice={totalPrice} requestPayment={() => {}} closeModal={closeCashPaymentModal} />
-      )}
+      {showIndicator && <PaymentSpinner requestPayment={requestPayment} />}
     </section>
   );
 }
