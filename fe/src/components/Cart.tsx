@@ -173,7 +173,7 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
         />
       )}
       {isCashPaymentModalOpen && (
-        <CashPaymentModal totalPrice={totalPrice} requestPayment={requestPayment} closeModal={closeCashPaymentModal} />
+        <CashPaymentModal totalPrice={totalPrice} requestPayment={requestPayment} changePage={changePage} closeModal={closeCashPaymentModal} />
       )}
       {isIndicatorVisible && <PaymentSpinner />}
     </section>
