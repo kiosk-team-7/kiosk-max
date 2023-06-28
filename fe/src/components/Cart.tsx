@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { API_URL, CART_DURATION } from "../constants";
+import { API_URL } from "../constants";
 import { PaymentType, Size, Temperature } from "../types/constants";
 import styles from "./Cart.module.css";
 import Modal from "./Modal";
@@ -24,15 +24,17 @@ interface PaymentRequestBody {
   paymentType: PaymentType;
 }
 
+const WAITING_TIME = 60;
+
 export default function Cart({ cartItems, removeItem, removeAllItems, changePage }: CartProps) {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isIndicatorVisible, setIsIndicatorVisible] = useState(false);
   const [isRemoveAllItemsModalOpen, setIsRemoveAllItemsModalOpen] = useState(false);
   const [isCashPaymentModalOpen, setIsCashPaymentModalOpen] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(CART_DURATION);
+  const [remainingTime, setRemainingTime] = useState(WAITING_TIME);
   const [prevCartItems, setPrevCartItems] = useState<CartItem[]>(cartItems);
   const paymentTypeRef = useRef<PaymentType>();
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       setRemainingTime((r) => r - 1);
@@ -54,7 +56,7 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
   }, [remainingTime, removeAllItems]);
 
   if (prevCartItems.length !== cartItems.length) {
-    setRemainingTime(CART_DURATION);
+    setRemainingTime(WAITING_TIME);
     setPrevCartItems(cartItems);
   }
 
