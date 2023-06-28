@@ -7,8 +7,10 @@ interface ResultPageProps {
   response: ResponseBody | undefined;
 }
 
+const WAITING_TIME = 10;
+
 export default function Result({ changePage, response }: ResultPageProps) {
-  const [count, setCount] = useState(10);
+  const [count, setCount] = useState(WAITING_TIME);
   const isSuccess = response?.status === 200;
 
   useEffect(() => {
