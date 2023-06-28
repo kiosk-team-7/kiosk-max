@@ -27,7 +27,7 @@ export default function Result({ changePage, response }: ResultPageProps) {
     if (count === 0) {
       changePage("/");
     }
-  }, [count]);
+  }, [count, changePage]);
 
   return (
     <>
