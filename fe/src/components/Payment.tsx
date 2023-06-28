@@ -43,10 +43,11 @@ export function PaymentSpinner() {
 interface CashPaymentModalProps {
   totalPrice: number;
   closeModal: () => void;
-  requestPayment: (inputAmount:number) => void;
+  requestPayment: (inputAmount:number) => Promise<ResponseBody>;
+  changePage: (path: Path, response: ResponseBody) => void;
 }
 
-export function CashPaymentModal({ totalPrice, closeModal, requestPayment }: CashPaymentModalProps) {
+export function CashPaymentModal({ totalPrice, closeModal, requestPayment, changePage }: CashPaymentModalProps) {
   const [inputAmount, setInputAmount] = useState(0);
   const [isPaymentButtonActive, setIsPaymentButtonActive] = useState(false);
 
@@ -66,9 +67,11 @@ export function CashPaymentModal({ totalPrice, closeModal, requestPayment }: Cas
     setInputAmount((i) => i + amount);
   };
 
-  const handleConfirmButtonClick = () => {
+  const handleConfirmButtonClick = async () => {
     setIsPaymentButtonActive(false);
-    requestPayment(inputAmount);
+    const response = await requestPayment(inputAmount);
+
+    changePage("/result", response);
   };
 
   return (
