@@ -1,9 +1,9 @@
-import { useRef, useState } from "react";
-import { PaymentSelectionModal, PaymentSpinner, CashPaymentModal } from "./Payment";
-import styles from "./Cart.module.css";
-import Modal from "./Modal";
+import { useEffect, useRef, useState } from "react";
 import { API_URL } from "../constants";
 import { PaymentType, Size, Temperature } from "../types/constants";
+import styles from "./Cart.module.css";
+import Modal from "./Modal";
+import { CashPaymentModal, PaymentSelectionModal, PaymentSpinner } from "./Payment";
 
 interface CartProps {
   cartItems: CartItem[];
@@ -24,12 +24,41 @@ interface PaymentRequestBody {
   paymentType: PaymentType;
 }
 
+const WAITING_TIME = 60;
+
 export default function Cart({ cartItems, removeItem, removeAllItems, changePage }: CartProps) {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isIndicatorVisible, setIsIndicatorVisible] = useState(false);
   const [isRemoveAllItemsModalOpen, setIsRemoveAllItemsModalOpen] = useState(false);
   const [isCashPaymentModalOpen, setIsCashPaymentModalOpen] = useState(false);
+  const [remainingTime, setRemainingTime] = useState(WAITING_TIME);
+  const [prevCartItems, setPrevCartItems] = useState<CartItem[]>(cartItems);
   const paymentTypeRef = useRef<PaymentType>();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRemainingTime((r) => r - 1);
+    }, 1000);
+
+    if (isPaymentModalOpen || isCashPaymentModalOpen || isRemoveAllItemsModalOpen || isIndicatorVisible) {
+      clearInterval(interval);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isPaymentModalOpen, isIndicatorVisible, isRemoveAllItemsModalOpen, isCashPaymentModalOpen]);
+
+  useEffect(() => {
+    if (remainingTime < 0) {
+      removeAllItems();
+    }
+  }, [remainingTime, removeAllItems]);
+
+  if (prevCartItems.length !== cartItems.length) {
+    setRemainingTime(WAITING_TIME);
+    setPrevCartItems(cartItems);
+  }
 
   const openRemoveAllItemsModal = () => {
     setIsRemoveAllItemsModalOpen(true);
@@ -118,7 +147,7 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
         </ul>
       </div>
       <div className={styles.ButtonSection}>
-        <div className={styles.Timer}>8초 남음</div>
+        <div className={styles.Timer}>{remainingTime}초 남음</div>
         <button className={styles.CancelAllButton} onClick={openRemoveAllItemsModal}>
           전체 취소
         </button>
