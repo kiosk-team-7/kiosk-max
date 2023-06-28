@@ -20,3 +20,22 @@ interface CartItem {
   };
   count: number;
 }
+
+interface ResponseBody {
+  status: number;
+  body: ReceiptResponseBody | ErrorResponseBody;
+}
+
+interface ReceiptResponseBody {
+  orderNumber: number;
+  menus: { name: string; count: number }[];
+  paymentType: number;
+  inputAmount: number;
+  totalPrice: number;
+  remain: number;
+}
+
+interface ErrorResponseBody {
+  message: string;
+  statusCode: number;
+}
