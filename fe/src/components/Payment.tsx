@@ -31,11 +31,7 @@ export function PaymentSelectionModal({
   );
 }
 
-interface PaymentSpinnerProps {
-  requestPayment: () => void;
-}
-
-export function PaymentSpinner({ requestPayment }: PaymentSpinnerProps) {
+export function PaymentSpinner() {
   return (
     <Dim>
       <div className={styles.Spinner}></div>

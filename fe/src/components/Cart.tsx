@@ -9,7 +9,7 @@ interface CartProps {
   cartItems: CartItem[];
   removeItem: (id: number) => void;
   removeAllItems: () => void;
-  changePage: (path: Path) => void;
+  changePage: (path: Path, response: ResponseBody) => void;
 }
 
 interface PaymentRequestBody {
@@ -39,7 +39,7 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     setIsRemoveAllItemsModalOpen(false);
   };
 
-  const requestPayment = async (inputAmount?: number) => {
+  const requestPayment = async (inputAmount?: number): Promise<ResponseBody> => {
     const body: PaymentRequestBody = {
       menus: cartItems.map((item) => {
         return {
@@ -63,7 +63,9 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     };
 
     const res = await fetch(`${API_URL}/api/orders`, options);
-    const data = await res.json();
+
+    const parsedData = await res.json();
+    const data = { status: res.status, body: parsedData };
 
     return data;
   };
@@ -92,9 +94,14 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     setIsPaymentModalOpen(false);
   };
 
-  const selectCardPayment = () => {
+  const selectCardPayment = async () => {
     paymentTypeRef.current = PaymentType.CARD;
     setIsIndicatorVisible(true);
+
+    const response = await requestPayment();
+
+    setIsIndicatorVisible(false);
+    changePage("/result", response);
   };
 
   const selectCashPayment = () => {
@@ -139,7 +146,7 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
       {isCashPaymentModalOpen && (
         <CashPaymentModal totalPrice={totalPrice} requestPayment={requestPayment} closeModal={closeCashPaymentModal} />
       )}
-      {isIndicatorVisible && <PaymentSpinner requestPayment={requestPayment} />}
+      {isIndicatorVisible && <PaymentSpinner />}
     </section>
   );
 }
