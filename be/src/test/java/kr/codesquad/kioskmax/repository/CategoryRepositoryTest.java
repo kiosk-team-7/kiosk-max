@@ -23,7 +23,7 @@ class CategoryRepositoryTest {
     @DisplayName("카테고리가 있을 때 카테고리 전체 조회하면 모든 카테고리를 반환한다.")
     @Test
     void findAll() {
-        // given
+        //given
 
         // when
         List<Category> actual = repository.findAll();
