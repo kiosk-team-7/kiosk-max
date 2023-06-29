@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Dim from "./Dim";
 import Modal from "./Modal";
 import OptionButton from "./OptionButton";
 import styles from "./Payment.module.css";
@@ -39,19 +38,10 @@ export function PaymentSelectionModal({
   );
 }
 
-export function PaymentSpinner() {
-  return (
-    <Dim>
-      <div className={styles.Spinner}></div>
-      <div className={styles.SpinnerContent}>카드 결제중...</div>
-    </Dim>
-  );
-}
-
 type CashPaymentModalProps = {
   totalPrice: number;
   closeModal: () => void;
-  requestPayment: (inputAmount: number) => Promise<ResponseBody>;
+  requestPaymentWithIndicator: (inputAmount: number) => Promise<ResponseBody>;
   changePage: (path: Path, response: ResponseBody) => void;
 };
 
@@ -60,7 +50,7 @@ const INPUT_OPTIONS = [100, 500, 1000, 5000, 10000, 50000];
 export function CashPaymentModal({
   totalPrice,
   closeModal,
-  requestPayment,
+  requestPaymentWithIndicator,
   changePage,
 }: CashPaymentModalProps) {
   const [inputAmount, setInputAmount] = useState(0);
@@ -70,7 +60,7 @@ export function CashPaymentModal({
   };
 
   const handleConfirmButtonClick = async () => {
-    const response = await requestPayment(inputAmount);
+    const response = await requestPaymentWithIndicator(inputAmount);
 
     changePage("/result", response);
   };

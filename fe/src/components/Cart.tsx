@@ -3,12 +3,9 @@ import { API_URL } from "../constants";
 import { PaymentType, Size, Temperature } from "../types/constants";
 import styles from "./Cart.module.css";
 import Modal from "./Modal";
-import {
-  CashPaymentModal,
-  PaymentSelectionModal,
-  PaymentSpinner,
-} from "./Payment";
+import { CashPaymentModal, PaymentSelectionModal } from "./Payment";
 import CloseButton from "./CloseButton";
+import { Spinner } from "./Spinner";
 
 type CartProps = {
   cartItems: CartItem[];
@@ -151,21 +148,31 @@ export default function Cart({
 
   const selectCardPayment = async () => {
     paymentTypeRef.current = PaymentType.CARD;
-    setIsIndicatorVisible(true);
 
-    const response = await requestPayment();
+    const response = await requestPaymentWithIndicator();
 
-    setIsIndicatorVisible(false);
     changePage("/result", response);
   };
 
   const selectCashPayment = () => {
+    paymentTypeRef.current = PaymentType.CASH;
+
     closePaymentSelectionModal();
     setIsCashPaymentModalOpen(true);
   };
 
   const closeCashPaymentModal = () => {
     setIsCashPaymentModalOpen(false);
+  };
+
+  const requestPaymentWithIndicator = async (inputAmount?: number) => {
+    setIsIndicatorVisible(true);
+
+    const response = await requestPayment(inputAmount);
+
+    setIsIndicatorVisible(false);
+
+    return response;
   };
 
   return (
@@ -214,12 +221,22 @@ export default function Cart({
       {isCashPaymentModalOpen && (
         <CashPaymentModal
           totalPrice={totalPrice}
-          requestPayment={requestPayment}
+          requestPaymentWithIndicator={requestPaymentWithIndicator}
           changePage={changePage}
           closeModal={closeCashPaymentModal}
         />
       )}
-      {isIndicatorVisible && <PaymentSpinner />}
+      {isIndicatorVisible && (
+        <Spinner
+          content={
+            paymentTypeRef.current === PaymentType.CARD
+              ? "카드 결제 중입니다..."
+              : paymentTypeRef.current === PaymentType.CASH
+              ? "현금 결제 중입니다..."
+              : ""
+          }
+        />
+      )}
     </section>
   );
 }
