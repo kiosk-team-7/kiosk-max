@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import Home from "./components/Home";
-import Result from "./components/Result";
+import Result from "./Pages/Result";
+import Home from "./Pages/Home";
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);

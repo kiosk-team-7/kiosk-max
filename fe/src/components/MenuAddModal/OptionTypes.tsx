@@ -27,7 +27,7 @@ export default function OptionTypes({
     <>
       {optionTypes.map((optionType) => {
         return (
-          <div className={styles.MenuItemOption}>
+          <div className={styles.MenuItemOption} key={optionType.type}>
             <OptionType type={optionType.type} options={optionType.options} />
           </div>
         );

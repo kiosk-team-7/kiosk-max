@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from "./Home.module.css";
-import CategoryTab from "./CategoryTab";
-import Main from "./Main";
 import { AnimationClass } from "../types/constants";
 import { API_URL } from "../constants";
+import CategoryTab from "../components/CategoryTab";
+import Main from "../components/Main";
 
 type HomeProps = {
   changePage: (path: Path) => void;

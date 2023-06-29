@@ -80,7 +80,7 @@ export default function MenuAddModal({
     closeModal();
   };
 
-  const optionTypes = optionTypesGenerater(menuOption, setMenuOption);
+  const optionTypes = optionTypesGenerator(menuOption, setMenuOption);
   const counter = {
     quantity: menuOption.quantity,
     handlePlusButtonClick,
@@ -127,7 +127,7 @@ function AddMenuButton({
   );
 }
 
-const optionTypesGenerater = (
+const optionTypesGenerator = (
   menuOption: MenuOption,
   setMenuOption: React.Dispatch<React.SetStateAction<MenuOption>>
 ) => {
