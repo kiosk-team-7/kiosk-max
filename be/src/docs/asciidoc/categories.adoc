@@ -1,4 +1,4 @@
-# 게시판 API
+# 키크오크 API
 :icons: font
 :source-highlighter: highlightjs
 :toc: left

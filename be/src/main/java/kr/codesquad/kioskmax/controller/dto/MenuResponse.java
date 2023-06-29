@@ -19,7 +19,7 @@ public class MenuResponse {
     private final boolean isPopular;
 
     @Builder
-    public MenuResponse(Long id, Long categoryId, String name, Long price, String imageSrc, boolean isPopular) {
+    private MenuResponse(Long id, Long categoryId, String name, Long price, String imageSrc, boolean isPopular) {
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;

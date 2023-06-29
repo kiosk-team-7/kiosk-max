@@ -1,14 +1,13 @@
 package kr.codesquad.kioskmax.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import kr.codesquad.kioskmax.repository.CategoryRepository;
 import kr.codesquad.kioskmax.repository.MenuRepository;
 import kr.codesquad.kioskmax.service.dto.CategoryInformation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

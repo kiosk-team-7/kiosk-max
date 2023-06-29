@@ -27,6 +27,4 @@ public class Menu {
         this.isPopular = isPopular;
         this.createdDateTime = createdDateTime;
     }
-
-
 }
