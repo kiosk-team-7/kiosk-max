@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { API_URL } from "../../../constants";
 import { PaymentType, Size, Temperature } from "../../../types/constants";
 import styles from "./Cart.module.css";
-import CloseButton from "../../CloseButton";
 import { Spinner } from "../../Spinner";
 import { CashPaymentModal, PaymentSelectionModal } from "../Payment";
 import ClearConfirmModal from "./ClearConfirmModal";
+import CartItem from "./CartItem";
 
 type CartProps = {
   cartItems: CartItem[];
@@ -246,34 +246,5 @@ export default function Cart({
         />
       )}
     </section>
-  );
-}
-type CartItemProps = {
-  id: number;
-  name: string;
-  price: number;
-  imageSrc: string;
-  count: number;
-  removeItem: (id: number) => void;
-};
-
-function CartItem({
-  id,
-  name,
-  imageSrc,
-  count,
-  price,
-  removeItem,
-}: CartItemProps) {
-  return (
-    <>
-      <div className={styles.ItemContent}>
-        <img className={styles.ItemImage} src={imageSrc} alt={name} />
-        <div>{name}</div>
-        <div>{price}</div>
-      </div>
-      <div className={styles.ItemCount}>{count}</div>
-      <CloseButton onClick={() => removeItem(id)} />
-    </>
   );
 }
