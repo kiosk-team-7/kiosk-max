@@ -145,6 +145,10 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
   return (
     <section className={styles.Cart}>
       <div className={styles.ItemSection}>
+        <div className={styles.ItemInfo}>
+          <p>주문 수량: 5</p>
+          <p>20000원</p>
+        </div>
         <ul className={styles.ItemContainer}>
           {reducedItems.map((item) => (
             <li className={styles.Item} key={item.id}>
@@ -173,7 +177,12 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
         />
       )}
       {isCashPaymentModalOpen && (
-        <CashPaymentModal totalPrice={totalPrice} requestPayment={requestPayment} changePage={changePage} closeModal={closeCashPaymentModal} />
+        <CashPaymentModal
+          totalPrice={totalPrice}
+          requestPayment={requestPayment}
+          changePage={changePage}
+          closeModal={closeCashPaymentModal}
+        />
       )}
       {isIndicatorVisible && <PaymentSpinner />}
     </section>
@@ -190,15 +199,17 @@ interface CartItemProps {
 
 function CartItem({ id, name, imageSrc, count, price, removeItem }: CartItemProps) {
   return (
-    <div className={styles.ItemContent}>
-      <img className={styles.ItemImage} src={imageSrc} alt={name} />
-      <div>{name}</div>
-      <div>{price}</div>
+    <>
+      <div className={styles.ItemContent}>
+        <img className={styles.ItemImage} src={imageSrc} alt={name} />
+        <div>{name}</div>
+        <div>{price}</div>
+      </div>
       <div className={styles.ItemCount}>{count}</div>
       <button className={styles.RemoveButton} onClick={() => removeItem(id)}>
         X
       </button>
-    </div>
+    </>
   );
 }
 
