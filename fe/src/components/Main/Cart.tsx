@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { API_URL } from "../../constants";
 import { PaymentType, Size, Temperature } from "../../types/constants";
 import styles from "./Cart.module.css";
-import Modal from "./../Modal";
 import CloseButton from "./../CloseButton";
 import { Spinner } from "./../Spinner";
 import { CashPaymentModal, PaymentSelectionModal } from "./Payment";
+import ClearConfirmModal from "./ClearConfirmModal";
 
 type CartProps = {
   cartItems: CartItem[];
@@ -214,7 +214,7 @@ export default function Cart({
         </button>
       </div>
       {isRemoveAllItemsModalOpen && (
-        <RemoveAllItemsConfirmationModal
+        <ClearConfirmModal
           closeModal={closeRemoveAllItemsModal}
           removeAllItems={removeAllItems}
         />
@@ -275,41 +275,5 @@ function CartItem({
       <div className={styles.ItemCount}>{count}</div>
       <CloseButton onClick={() => removeItem(id)} />
     </>
-  );
-}
-
-type RemoveAllItemsConfirmationModalProps = {
-  closeModal: () => void;
-  removeAllItems: () => void;
-};
-
-function RemoveAllItemsConfirmationModal({
-  closeModal,
-  removeAllItems,
-}: RemoveAllItemsConfirmationModalProps) {
-  const handleConfirmButtonClick = () => {
-    removeAllItems();
-    closeModal();
-  };
-
-  return (
-    <Modal closeModal={closeModal}>
-      <>
-        <div className={styles.ModalContent}>
-          장바구니에 담긴 상품 모두 삭제하시겠습니까?
-        </div>
-        <div className={styles.ButtonContainer}>
-          <button
-            className={styles.ConfirmButton}
-            onClick={handleConfirmButtonClick}
-          >
-            예
-          </button>
-          <button className={styles.CancelButton} onClick={closeModal}>
-            아니오
-          </button>
-        </div>
-      </>
-    </Modal>
   );
 }
