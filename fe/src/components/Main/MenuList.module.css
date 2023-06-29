@@ -74,7 +74,7 @@
   box-sizing: content-box;
   border-width: 30px 13px 0;
   border-style: solid;
-  border-color: #FFBD15 transparent;
+  border-color: #ffbd15 transparent;
   transform: translate(-30%, -10%);
 }
 
@@ -87,7 +87,7 @@
   left: -12px;
   border-width: 0 28px 20px;
   border-style: solid;
-  border-color: transparent transparent #FFBD15;
+  border-color: transparent transparent #ffbd15;
 }
 
 .PopularMark span {

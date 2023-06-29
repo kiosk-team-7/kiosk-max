@@ -1,8 +1,8 @@
-import styles from './MenuList.module.css';
+import styles from "./MenuList.module.css";
 
-interface MenuProps {
+type MenuProps = {
   menu: Menu;
-}
+};
 
 export default function MenuItem({ menu }: MenuProps) {
   return (
@@ -18,7 +18,9 @@ export default function MenuItem({ menu }: MenuProps) {
 function PopularMark() {
   return (
     <>
-      <div className={styles.PopularMark}><span>인기</span></div>
+      <div className={styles.PopularMark}>
+        <span>인기</span>
+      </div>
     </>
   );
 }
