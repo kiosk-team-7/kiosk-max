@@ -43,11 +43,57 @@
 }
 
 .MenuItem {
+  position: relative;
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 10%;
+  border-radius: 15px;
+  box-shadow: -1px -1px 15px 5px #afafaf;
+  transition: transform 0.2s ease-in-out;
+}
+
+.MenuItem > img {
+  width: 75%;
 }
 
 .MenuItem:hover {
   cursor: pointer;
+  transform: scale(1.02);
+}
+
+.PopularMark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  box-sizing: content-box;
+  border-width: 30px 13px 0;
+  border-style: solid;
+  border-color: #FFBD15 transparent;
+  transform: translate(-30%, -10%);
+}
+
+.PopularMark:before {
+  content: "";
+  position: absolute;
+  height: 0;
+  width: 0;
+  top: -49px;
+  left: -12px;
+  border-width: 0 28px 20px;
+  border-style: solid;
+  border-color: transparent transparent #FFBD15;
+}
+
+.PopularMark span {
+  position: absolute;
+  top: -1.7rem;
+  font-size: 0.8rem;
+  color: white;
+  z-index: 1;
 }
