@@ -3,6 +3,7 @@ import { Size, Temperature } from "../types/constants";
 import styles from "./MenuAddModal.module.css";
 import MenuItem from "./MenuItem";
 import OptionButton from "./OptionButton";
+import Modal from "./Modal";
 
 interface MenuAddModalProps {
   menu: Menu;
@@ -62,12 +63,8 @@ export default function MenuAddModal({
   };
 
   return (
-    <div className={styles.ModalContainer}>
-      <div className={styles.Backdrop} onClick={closeModal}></div>
-      <div className={styles.Modal}>
-        <div className={styles.CloseButton} onClick={closeModal}>
-          X
-        </div>
+    <Modal closeModal={closeModal}>
+      <div className={styles.Content}>
         <div className={styles.MenuInfo}>
           <div className={styles.MenuItemWrapper}>
             {menu && <MenuItem menu={menu} />}
@@ -115,7 +112,7 @@ export default function MenuAddModal({
           handleAddMenuButtonClick={handleAddMenuButtonClick}
         />
       </div>
-    </div>
+    </Modal>
   );
 }
 
