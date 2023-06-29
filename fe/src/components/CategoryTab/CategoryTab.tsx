@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import styles from "./CategoryTab.module.css";
+import TabItem from "./TabItem";
 
 type CategoryTabProps = {
   categories: string[];
@@ -92,26 +93,5 @@ export default function CategoryTab({
         })}
       </ul>
     </nav>
-  );
-}
-
-type TabItemProps = {
-  name: string;
-  isCurrentCategory: boolean;
-  handleCategoryChange: () => void;
-};
-
-function TabItem({
-  name,
-  isCurrentCategory,
-  handleCategoryChange,
-}: TabItemProps) {
-  const tabItemClass = isCurrentCategory
-    ? styles.CurrentTabItem
-    : styles.TabItem;
-  return (
-    <li className={tabItemClass} onClick={handleCategoryChange}>
-      {name}
-    </li>
   );
 }
