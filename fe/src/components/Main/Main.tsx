@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { AnimationClass } from "../types/constants";
 import Cart from "./Cart";
 import MenuList from "./MenuList";
-import MenuAddModal from "./MenuAddModal/MenuAddModal";
+import MenuAddModal from "../MenuAddModal/MenuAddModal";
+import { AnimationClass } from "../../types/constants";
 
 type MainProps = {
   menus: Menu[];

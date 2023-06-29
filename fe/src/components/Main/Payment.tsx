@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Modal from "./Modal";
-import OptionButton, { ButtonStyle } from "./MenuAddModal/OptionButton";
+import Modal from "../Modal";
+import OptionButton, { ButtonStyle } from "./../MenuAddModal/OptionButton";
 import styles from "./Payment.module.css";
 
 type PaymentSelectionModalProps = {

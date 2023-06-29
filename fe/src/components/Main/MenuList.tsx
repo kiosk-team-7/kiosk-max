@@ -1,4 +1,4 @@
-import { AnimationClass } from "../types/constants";
+import { AnimationClass } from "../../types/constants";
 import MenuItem from "./MenuItem";
 import styles from "./MenuList.module.css";
 

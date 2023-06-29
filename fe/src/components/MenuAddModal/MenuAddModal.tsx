@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import styles from "./MenuAddModal.module.css";
 import { Size, Temperature } from "../../types/constants";
 import Modal from "../Modal";
-import MenuItem from "../MenuItem";
 import OptionTypes from "./OptionTypes";
 import { ButtonStyle } from "./OptionButton";
+import MenuItem from "../Main/MenuItem";
 
 type MenuAddModalProps = {
   menu: Menu;
