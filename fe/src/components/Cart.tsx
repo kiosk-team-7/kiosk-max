@@ -3,7 +3,11 @@ import { API_URL } from "../constants";
 import { PaymentType, Size, Temperature } from "../types/constants";
 import styles from "./Cart.module.css";
 import Modal from "./Modal";
-import { CashPaymentModal, PaymentSelectionModal, PaymentSpinner } from "./Payment";
+import {
+  CashPaymentModal,
+  PaymentSelectionModal,
+  PaymentSpinner,
+} from "./Payment";
 
 interface CartProps {
   cartItems: CartItem[];
@@ -26,10 +30,16 @@ interface PaymentRequestBody {
 
 const WAITING_TIME = 60;
 
-export default function Cart({ cartItems, removeItem, removeAllItems, changePage }: CartProps) {
+export default function Cart({
+  cartItems,
+  removeItem,
+  removeAllItems,
+  changePage,
+}: CartProps) {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isIndicatorVisible, setIsIndicatorVisible] = useState(false);
-  const [isRemoveAllItemsModalOpen, setIsRemoveAllItemsModalOpen] = useState(false);
+  const [isRemoveAllItemsModalOpen, setIsRemoveAllItemsModalOpen] =
+    useState(false);
   const [isCashPaymentModalOpen, setIsCashPaymentModalOpen] = useState(false);
   const [remainingTime, setRemainingTime] = useState(WAITING_TIME);
   const [prevCartItems, setPrevCartItems] = useState<CartItem[]>(cartItems);
@@ -40,14 +50,24 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
       setRemainingTime((r) => r - 1);
     }, 1000);
 
-    if (isPaymentModalOpen || isCashPaymentModalOpen || isRemoveAllItemsModalOpen || isIndicatorVisible) {
+    if (
+      isPaymentModalOpen ||
+      isCashPaymentModalOpen ||
+      isRemoveAllItemsModalOpen ||
+      isIndicatorVisible
+    ) {
       clearInterval(interval);
     }
 
     return () => {
       clearInterval(interval);
     };
-  }, [isPaymentModalOpen, isIndicatorVisible, isRemoveAllItemsModalOpen, isCashPaymentModalOpen]);
+  }, [
+    isPaymentModalOpen,
+    isIndicatorVisible,
+    isRemoveAllItemsModalOpen,
+    isCashPaymentModalOpen,
+  ]);
 
   useEffect(() => {
     if (remainingTime < 0) {
@@ -68,7 +88,9 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     setIsRemoveAllItemsModalOpen(false);
   };
 
-  const requestPayment = async (inputAmount?: number): Promise<ResponseBody> => {
+  const requestPayment = async (
+    inputAmount?: number
+  ): Promise<ResponseBody> => {
     const body: PaymentRequestBody = {
       menus: cartItems.map((item) => {
         return {
@@ -99,17 +121,20 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     return data;
   };
 
-  const reducedItems = cartItems.reduce((acc: CartItem[], cartItem: CartItem) => {
-    const sameItem = acc.find((item) => item.id === cartItem.id);
+  const reducedItems = cartItems.reduce(
+    (acc: CartItem[], cartItem: CartItem) => {
+      const sameItem = acc.find((item) => item.id === cartItem.id);
 
-    if (sameItem) {
-      sameItem.count += cartItem.count;
-    } else {
-      acc.push({ ...cartItem });
-    }
+      if (sameItem) {
+        sameItem.count += cartItem.count;
+      } else {
+        acc.push({ ...cartItem });
+      }
 
-    return acc;
-  }, []);
+      return acc;
+    },
+    []
+  );
 
   const totalPrice = cartItems.reduce((acc, cartItem) => {
     return acc + cartItem.price * cartItem.count;
@@ -159,15 +184,24 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
       </div>
       <div className={styles.ButtonSection}>
         <div className={styles.Timer}>{remainingTime}초 남음</div>
-        <button className={styles.CancelAllButton} onClick={openRemoveAllItemsModal}>
+        <button
+          className={styles.CancelAllButton}
+          onClick={openRemoveAllItemsModal}
+        >
           전체 취소
         </button>
-        <button className={styles.PaymentButton} onClick={openPaymentSelectionModal}>
+        <button
+          className={styles.PaymentButton}
+          onClick={openPaymentSelectionModal}
+        >
           결제하기
         </button>
       </div>
       {isRemoveAllItemsModalOpen && (
-        <RemoveAllItemsConfirmationModal closeModal={closeRemoveAllItemsModal} removeAllItems={removeAllItems} />
+        <RemoveAllItemsConfirmationModal
+          closeModal={closeRemoveAllItemsModal}
+          removeAllItems={removeAllItems}
+        />
       )}
       {isPaymentModalOpen && (
         <PaymentSelectionModal
@@ -197,7 +231,14 @@ interface CartItemProps {
   removeItem: (id: number) => void;
 }
 
-function CartItem({ id, name, imageSrc, count, price, removeItem }: CartItemProps) {
+function CartItem({
+  id,
+  name,
+  imageSrc,
+  count,
+  price,
+  removeItem,
+}: CartItemProps) {
   return (
     <>
       <div className={styles.ItemContent}>
@@ -218,7 +259,10 @@ interface RemoveAllItemsConfirmationModalProps {
   removeAllItems: () => void;
 }
 
-function RemoveAllItemsConfirmationModal({ closeModal, removeAllItems }: RemoveAllItemsConfirmationModalProps) {
+function RemoveAllItemsConfirmationModal({
+  closeModal,
+  removeAllItems,
+}: RemoveAllItemsConfirmationModalProps) {
   const handleConfirmButtonClick = () => {
     removeAllItems();
     closeModal();
@@ -227,9 +271,14 @@ function RemoveAllItemsConfirmationModal({ closeModal, removeAllItems }: RemoveA
   return (
     <Modal closeModal={closeModal}>
       <>
-        <div className={styles.ModalContent}>장바구니에 담긴 상품 모두 삭제하시겠습니까?</div>
+        <div className={styles.ModalContent}>
+          장바구니에 담긴 상품 모두 삭제하시겠습니까?
+        </div>
         <div className={styles.ButtonContainer}>
-          <button className={styles.ConfirmButton} onClick={handleConfirmButtonClick}>
+          <button
+            className={styles.ConfirmButton}
+            onClick={handleConfirmButtonClick}
+          >
             예
           </button>
           <button className={styles.CancelButton} onClick={closeModal}>

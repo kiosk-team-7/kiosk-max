@@ -8,12 +8,20 @@ interface MenuListProps {
   animation: AnimationClass;
 }
 
-export default function MenuList({ menus, handleMenuItemClick, animation }: MenuListProps) {
+export default function MenuList({
+  menus,
+  handleMenuItemClick,
+  animation,
+}: MenuListProps) {
   return (
     <main className={`${styles.MenuList} ${styles[animation]}`}>
       <ul className={styles.MenuListContainer}>
         {menus.map((menu) => (
-          <li className={styles.MenuItem} key={menu.id} onClick={() => handleMenuItemClick(menu)}>
+          <li
+            className={styles.MenuItem}
+            key={menu.id}
+            onClick={() => handleMenuItemClick(menu)}
+          >
             <MenuItem menu={menu} />
           </li>
         ))}

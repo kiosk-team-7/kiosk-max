@@ -10,9 +10,15 @@ interface MenuAddModalProps {
   addMenuToCart: (item: CartItem) => void;
 }
 
-export default function MenuAddModal({ menu, closeModal, addMenuToCart }: MenuAddModalProps) {
+export default function MenuAddModal({
+  menu,
+  closeModal,
+  addMenuToCart,
+}: MenuAddModalProps) {
   const [size, setSize] = useState<Size>(Size.UNCHECKED);
-  const [temperature, setTemperature] = useState<Temperature>(Temperature.UNCHECKED);
+  const [temperature, setTemperature] = useState<Temperature>(
+    Temperature.UNCHECKED
+  );
   const [count, setCount] = useState(1);
   const [isAllOptionsSelected, setIsAllOptionsSelected] = useState(false);
 
@@ -119,14 +125,24 @@ interface QuantityCounterProps {
   handleMinusButtonClick: () => void;
 }
 
-function QuantityCounter({ quantity, handlePlusButtonClick, handleMinusButtonClick }: QuantityCounterProps) {
+function QuantityCounter({
+  quantity,
+  handlePlusButtonClick,
+  handleMinusButtonClick,
+}: QuantityCounterProps) {
   return (
     <>
-      <button className={styles.CounterController} onClick={handleMinusButtonClick}>
+      <button
+        className={styles.CounterController}
+        onClick={handleMinusButtonClick}
+      >
         -
       </button>
       <span className={styles.Counter}>{quantity}</span>
-      <button className={styles.CounterController} onClick={handlePlusButtonClick}>
+      <button
+        className={styles.CounterController}
+        onClick={handlePlusButtonClick}
+      >
         +
       </button>
     </>
@@ -138,9 +154,16 @@ interface AddMenuButtonProps {
   handleAddMenuButtonClick: () => void;
 }
 
-function AddMenuButton({ isAllOptionsSelected, handleAddMenuButtonClick }: AddMenuButtonProps) {
+function AddMenuButton({
+  isAllOptionsSelected,
+  handleAddMenuButtonClick,
+}: AddMenuButtonProps) {
   return (
-    <button className={styles.AddMenuButton} disabled={!isAllOptionsSelected} onClick={handleAddMenuButtonClick}>
+    <button
+      className={styles.AddMenuButton}
+      disabled={!isAllOptionsSelected}
+      onClick={handleAddMenuButtonClick}
+    >
       담기
     </button>
   );

@@ -7,13 +7,19 @@ interface CategoryTabProps {
   handleCategoryChange: (index: number) => void;
 }
 
-export default function CategoryTab({ categories, currentCategoryIndex, handleCategoryChange }: CategoryTabProps) {
+export default function CategoryTab({
+  categories,
+  currentCategoryIndex,
+  handleCategoryChange,
+}: CategoryTabProps) {
   const [scrollPosition, setScrollPosition] = useState(0);
   const isDraggingRef = useRef(false);
   const startXRef = useRef(0);
   const tabContainerRef = useRef<HTMLUListElement>(null);
 
-  const handleMouseDown = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  const handleMouseDown = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
     isDraggingRef.current = true;
     startXRef.current = event.pageX - scrollPosition;
   };
@@ -22,7 +28,9 @@ export default function CategoryTab({ categories, currentCategoryIndex, handleCa
     isDraggingRef.current = false;
   };
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  const handleMouseMove = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
     if (!isDraggingRef.current) {
       return;
     }
@@ -63,7 +71,11 @@ export default function CategoryTab({ categories, currentCategoryIndex, handleCa
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <ul className={styles.TabContainer} style={scrollableStyle} ref={tabContainerRef}>
+      <ul
+        className={styles.TabContainer}
+        style={scrollableStyle}
+        ref={tabContainerRef}
+      >
         {categories.map((category, index) => {
           const isCurrentCategory = index === currentCategoryIndex;
 
@@ -89,8 +101,14 @@ interface TabItemProps {
   handleCategoryChange: () => void;
 }
 
-function TabItem({ name, isCurrentCategory, handleCategoryChange }: TabItemProps) {
-  const tabItemClass = isCurrentCategory ? styles.CurrentTabItem : styles.TabItem;
+function TabItem({
+  name,
+  isCurrentCategory,
+  handleCategoryChange,
+}: TabItemProps) {
+  const tabItemClass = isCurrentCategory
+    ? styles.CurrentTabItem
+    : styles.TabItem;
   return (
     <li className={tabItemClass} onClick={handleCategoryChange}>
       {name}

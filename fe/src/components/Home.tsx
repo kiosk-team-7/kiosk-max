@@ -18,7 +18,9 @@ interface KioskData {
 export default function Home({ changePage }: HomeProps) {
   const [kioskData, setKioskData] = useState<KioskData[]>([]);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
-  const [animation, setAnimation] = useState<AnimationClass>(AnimationClass.ANIMATE_IN);
+  const [animation, setAnimation] = useState<AnimationClass>(
+    AnimationClass.ANIMATE_IN
+  );
 
   useEffect(() => {
     let ignore = false;
@@ -60,7 +62,11 @@ export default function Home({ changePage }: HomeProps) {
         currentCategoryIndex={currentCategoryIndex}
         handleCategoryChange={handleCategoryChange}
       />
-      <Main menus={currentMenus} animation={animation} changePage={changePage} />
+      <Main
+        menus={currentMenus}
+        animation={animation}
+        changePage={changePage}
+      />
     </div>
   );
 }

@@ -40,7 +40,9 @@ export default function Result({ changePage, response }: ResultPageProps) {
           )}
         </main>
         <div className={styles.ReceiptWarningTextContainer}>
-          <div className={styles.ReceiptWarningText}>{"(주의 : 이 화면은 10초 뒤에 자동으로 사라집니다)"}</div>
+          <div className={styles.ReceiptWarningText}>
+            {"(주의 : 이 화면은 10초 뒤에 자동으로 사라집니다)"}
+          </div>
           <div>{count}초</div>
         </div>
       </div>
@@ -52,7 +54,10 @@ function Receipt({ response }: { response: ReceiptResponseBody }) {
   return (
     <>
       <h2 className={styles.Header}>
-        주문번호 <span className={styles.OrderNumber}>{String(response.orderNumber).padStart(2, "0")}</span>
+        주문번호{" "}
+        <span className={styles.OrderNumber}>
+          {String(response.orderNumber).padStart(2, "0")}
+        </span>
       </h2>
       <ul className={styles.OrderMenus}>
         {response.menus.map((menu) => {
@@ -66,7 +71,11 @@ function Receipt({ response }: { response: ReceiptResponseBody }) {
       <div className={styles.ReceiptInfo}>
         <div>
           결제방식 :{" "}
-          {response.paymentType === PaymentType.CASH ? "현금" : response.paymentType === PaymentType.CARD ? "카드" : ""}
+          {response.paymentType === PaymentType.CASH
+            ? "현금"
+            : response.paymentType === PaymentType.CARD
+            ? "카드"
+            : ""}
         </div>
         <div>투입금액 : {response.inputAmount}원</div>
         <div>총 결제금액 : {response.totalPrice}원</div>

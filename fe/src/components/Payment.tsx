@@ -20,11 +20,19 @@ export function PaymentSelectionModal({
       <div className={styles.PaymentContainer}>
         <div className={styles.PaymentOption}>
           <div className={styles.PaymentIcon}>💳</div>
-          <OptionButton type={"Payment"} text={"카드결제"} onClick={selectCardPayment} />
+          <OptionButton
+            type={"Payment"}
+            text={"카드결제"}
+            onClick={selectCardPayment}
+          />
         </div>
         <div className={styles.PaymentOption}>
           <div className={styles.PaymentIcon}>💵</div>
-          <OptionButton type={"Payment"} text={"현금결제"} onClick={selectCashPayment} />
+          <OptionButton
+            type={"Payment"}
+            text={"현금결제"}
+            onClick={selectCashPayment}
+          />
         </div>
       </div>
     </Modal>
@@ -43,11 +51,16 @@ export function PaymentSpinner() {
 interface CashPaymentModalProps {
   totalPrice: number;
   closeModal: () => void;
-  requestPayment: (inputAmount:number) => Promise<ResponseBody>;
+  requestPayment: (inputAmount: number) => Promise<ResponseBody>;
   changePage: (path: Path, response: ResponseBody) => void;
 }
 
-export function CashPaymentModal({ totalPrice, closeModal, requestPayment, changePage }: CashPaymentModalProps) {
+export function CashPaymentModal({
+  totalPrice,
+  closeModal,
+  requestPayment,
+  changePage,
+}: CashPaymentModalProps) {
   const [inputAmount, setInputAmount] = useState(0);
   const [isPaymentButtonActive, setIsPaymentButtonActive] = useState(false);
 
@@ -80,7 +93,11 @@ export function CashPaymentModal({ totalPrice, closeModal, requestPayment, chang
         <div className={styles.InputOptionContainer}>
           {inputOptions.map((option) => (
             <div key={option} className={styles.InputOption}>
-              <OptionButton type={"CashInput"} text={option + "원"} onClick={() => increaseInputAmount(option)} />
+              <OptionButton
+                type={"CashInput"}
+                text={option + "원"}
+                onClick={() => increaseInputAmount(option)}
+              />
             </div>
           ))}
         </div>
@@ -93,8 +110,14 @@ export function CashPaymentModal({ totalPrice, closeModal, requestPayment, chang
           </div>
         </div>
         <div className={styles.ConfirmButtonContainer}>
-          <button className={cancelButtonClassName} onClick={closeModal}>결제 취소</button>
-          <button className={confirmButtonClassName} onClick={handleConfirmButtonClick} disabled={!isPaymentButtonActive}>
+          <button className={cancelButtonClassName} onClick={closeModal}>
+            결제 취소
+          </button>
+          <button
+            className={confirmButtonClassName}
+            onClick={handleConfirmButtonClick}
+            disabled={!isPaymentButtonActive}
+          >
             현금 결제하기
           </button>
         </div>

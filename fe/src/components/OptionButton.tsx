@@ -7,7 +7,12 @@ interface OptionButtonProps {
   onClick: () => void;
 }
 
-export default function OptionButton({ type, text, isSelected, onClick }: OptionButtonProps) {
+export default function OptionButton({
+  type,
+  text,
+  isSelected,
+  onClick,
+}: OptionButtonProps) {
   let className;
   switch (type) {
     case "Size":
