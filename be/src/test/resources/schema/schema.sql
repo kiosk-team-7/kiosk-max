@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS menu;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS order_detail;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS menu_rank;
+
 CREATE TABLE IF NOT EXISTS menu (
     id          bigint          NOT NULL auto_increment,
     category_id bigint          NOT NULL,
@@ -27,7 +33,7 @@ CREATE TABLE IF NOT EXISTS order_detail (
     create_at   datetime NOT NULL,
     size        int      NOT NULL,
     temperature int      NOT NULL,
-    price       bigint   NOT NULL,
+    amount      bigint   NOT NULL,
     PRIMARY KEY(id)
 );
 

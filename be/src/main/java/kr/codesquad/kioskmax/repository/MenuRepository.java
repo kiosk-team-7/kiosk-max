@@ -1,16 +1,15 @@
 package kr.codesquad.kioskmax.repository;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
+import kr.codesquad.kioskmax.domain.Menu;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import kr.codesquad.kioskmax.domain.Menu;
+import javax.sql.DataSource;
+import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class MenuRepository {
@@ -18,6 +17,13 @@ public class MenuRepository {
 
     public MenuRepository(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    }
+
+    public List<Menu> findAll() {
+        String sql = "SELECT id, category_Id, name, price, image_src, create_at " +
+                "FROM menu ";
+
+        return Collections.unmodifiableList(jdbcTemplate.query(sql, menuMapper));
     }
 
     public List<Menu> findAllByCategoryId(Long categoryId) {
@@ -36,13 +42,22 @@ public class MenuRepository {
         return jdbcTemplate.query(sql, Map.of("categoryId", categoryId), menuMapper);
     }
 
-    private final RowMapper<Menu> menuMapper = (rs, rowNum) -> Menu.builder()
-        .id(rs.getLong("id"))
-        .categoryId(rs.getLong("category_id"))
-        .name(rs.getString("name"))
-        .price(rs.getLong("price"))
-        .imageSrc(rs.getString("image_src"))
-        .isPopular(rs.getBoolean("is_popular"))
-        .createdDateTime(rs.getTimestamp("create_at").toLocalDateTime())
-        .build();
+    private final RowMapper<Menu> menuMapper = (rs, rowNum) -> {
+        boolean isPopular = false;
+        try {
+           isPopular = rs.getBoolean("is_popular");
+        } catch (SQLException e) {
+
+        }
+
+        return Menu.builder()
+                .id(rs.getLong("id"))
+                .categoryId(rs.getLong("category_id"))
+                .name(rs.getString("name"))
+                .price(rs.getLong("price"))
+                .imageSrc(rs.getString("image_src"))
+                .isPopular(isPopular)
+                .createdDateTime(rs.getTimestamp("create_at").toLocalDateTime())
+                .build();
+    };
 }

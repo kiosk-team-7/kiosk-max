@@ -1,14 +1,14 @@
 package kr.codesquad.kioskmax.repository;
 
-import java.util.List;
-
-import javax.sql.DataSource;
 import kr.codesquad.kioskmax.annotation.RepositoryTest;
+import kr.codesquad.kioskmax.domain.Menu;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import kr.codesquad.kioskmax.domain.Menu;
+
+import javax.sql.DataSource;
+import java.util.List;
 
 @RepositoryTest
 class MenuRepositoryTest {

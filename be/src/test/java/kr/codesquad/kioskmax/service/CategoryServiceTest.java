@@ -1,11 +1,5 @@
 package kr.codesquad.kioskmax.service;
 
-import static org.mockito.BDDMockito.given;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import kr.codesquad.kioskmax.annotation.ServiceTest;
 import kr.codesquad.kioskmax.domain.Category;
 import kr.codesquad.kioskmax.domain.Menu;
@@ -17,6 +11,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.mockito.BDDMockito.given;
 
 @ServiceTest
 class CategoryServiceTest {
