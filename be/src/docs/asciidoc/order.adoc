@@ -1,0 +1,36 @@
+# 키크오크 API
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+## 주문 생성
+
+### 요청
+include::{snippets}/order/cash-success/http-request.adoc[]
+include::{snippets}/order/cash-success/request-fields.adoc[]
+
+### 응답
+include::{snippets}/order/cash-success/http-response.adoc[]
+include::{snippets}/order/cash-success/response-fields.adoc[]
+
+## 주문시 결제 방식이 현금일 때 투입금액이 결제금액보다 부족한 경우 실패
+
+### 요청
+include::{snippets}/order/cash-fail/http-request.adoc[]
+include::{snippets}/order/cash-fail/request-fields.adoc[]
+
+### 응답
+include::{snippets}/order/cash-fail/http-response.adoc[]
+include::{snippets}/order/cash-fail/response-fields.adoc[]
+
+## 주문시 결제 방식이 카드일 때 결제금액이 부족한 경우 실패
+
+### 요청
+include::{snippets}/order/card-fail/http-request.adoc[]
+include::{snippets}/order/card-fail/request-fields.adoc[]
+
+### 응답
+include::{snippets}/order/card-fail/http-response.adoc[]
+include::{snippets}/order/card-fail/response-fields.adoc[]

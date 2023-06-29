@@ -1,0 +1,67 @@
+/* 사이즈 */
+.Size {
+  width: 100%;
+  background-color: white;
+  border: 2px solid #239290;
+  padding: 10px;
+  border-radius: 10px;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.Size:hover,
+.Size.Selected,
+.Payment:hover {
+  background-color: #239290;
+  border: 2px solid #239290;
+  color: white;
+}
+
+/* 물온도 */
+.Temperature {
+  width: 100%;
+  background-color: white;
+  border: 2px solid #ffbd16;
+  padding: 10px;
+  border-radius: 10px;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.Temperature:hover,
+.Temperature.Selected {
+  background-color: #ffbd16;
+  border: 2px solid #ffbd16;
+  color: white;
+}
+
+/* 결제타입 */
+.Payment {
+  width: 120px;
+  background-color: #239290;
+  border: 2px solid #239290;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.CashInput {
+  background-color: #239290;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}

@@ -1,0 +1,39 @@
+.CloseButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #333;
+  border-radius: 50%;
+  background-color: white;
+  transform: translate(30%, -30%);
+}
+
+.CloseButton:hover {
+  cursor: pointer;
+}
+
+.CloseButton:before,
+.CloseButton:after {
+  position: absolute;
+  top: 7px;
+  left: 19px;
+  content: " ";
+  height: 25px;
+  width: 2px;
+  background-color: #333;
+}
+
+.CloseButton:hover:before,
+.CloseButton:hover:after {
+  width: 3px;
+}
+
+.CloseButton:before {
+  transform: rotate(45deg);
+}
+
+.CloseButton:after {
+  transform: rotate(-45deg);
+}

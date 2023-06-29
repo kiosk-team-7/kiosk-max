@@ -1,0 +1,99 @@
+.AnimateIn {
+  animation-name: slide-down-in;
+  animation-duration: 0.5s;
+}
+
+@keyframes slide-down-in {
+  0% {
+    transform: translateY(-2%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+.AnimateOut {
+  animation-name: slide-down-out;
+  animation-duration: 0.5s;
+}
+
+@keyframes slide-down-out {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(2%);
+    opacity: 0;
+  }
+}
+
+.MenuList {
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.MenuListContainer {
+  padding: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 100px;
+}
+
+.MenuItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 10%;
+  border-radius: 15px;
+  box-shadow: -1px -1px 15px 5px #afafaf;
+  transition: transform 0.2s ease-in-out;
+}
+
+.MenuItem > img {
+  width: 75%;
+}
+
+.MenuItem:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+}
+
+.PopularMark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  box-sizing: content-box;
+  border-width: 30px 13px 0;
+  border-style: solid;
+  border-color: #ffbd15 transparent;
+  transform: translate(-30%, -10%);
+}
+
+.PopularMark:before {
+  content: "";
+  position: absolute;
+  height: 0;
+  width: 0;
+  top: -49px;
+  left: -12px;
+  border-width: 0 28px 20px;
+  border-style: solid;
+  border-color: transparent transparent #ffbd15;
+}
+
+.PopularMark span {
+  position: absolute;
+  top: -1.7rem;
+  font-size: 0.8rem;
+  color: white;
+  z-index: 1;
+}
