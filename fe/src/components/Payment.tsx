@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Dim from "./Dim";
 import Modal from "./Modal";
 import OptionButton from "./OptionButton";
@@ -55,6 +55,8 @@ type CashPaymentModalProps = {
   changePage: (path: Path, response: ResponseBody) => void;
 };
 
+const INPUT_OPTIONS = [100, 500, 1000, 5000, 10000, 50000];
+
 export function CashPaymentModal({
   totalPrice,
   closeModal,
@@ -62,36 +64,24 @@ export function CashPaymentModal({
   changePage,
 }: CashPaymentModalProps) {
   const [inputAmount, setInputAmount] = useState(0);
-  const [isPaymentButtonActive, setIsPaymentButtonActive] = useState(false);
-
-  useEffect(() => {
-    if (inputAmount >= totalPrice) {
-      setIsPaymentButtonActive(true);
-    } else {
-      setIsPaymentButtonActive(false);
-    }
-  }, [inputAmount]);
-
-  const inputOptions = [100, 500, 1000, 5000, 10000, 50000];
-  const cancelButtonClassName = `${styles.ConfirmButton} ${styles.CashPaymentCancelButton}`;
-  const confirmButtonClassName = `${styles.ConfirmButton} ${styles.CashPaymentConfirmButton}`;
 
   const increaseInputAmount = (amount: number) => {
     setInputAmount((i) => i + amount);
   };
 
   const handleConfirmButtonClick = async () => {
-    setIsPaymentButtonActive(false);
     const response = await requestPayment(inputAmount);
 
     changePage("/result", response);
   };
 
+  const isPaymentButtonActive = inputAmount >= totalPrice;
+
   return (
     <Modal>
       <>
         <div className={styles.InputOptionContainer}>
-          {inputOptions.map((option) => (
+          {INPUT_OPTIONS.map((option) => (
             <div key={option} className={styles.InputOption}>
               <OptionButton
                 type={"CashInput"}
@@ -110,11 +100,14 @@ export function CashPaymentModal({
           </div>
         </div>
         <div className={styles.ConfirmButtonContainer}>
-          <button className={cancelButtonClassName} onClick={closeModal}>
+          <button
+            className={`${styles.ConfirmButton} ${styles.CashPaymentCancelButton}`}
+            onClick={closeModal}
+          >
             결제 취소
           </button>
           <button
-            className={confirmButtonClassName}
+            className={`${styles.ConfirmButton} ${styles.CashPaymentConfirmButton}`}
             onClick={handleConfirmButtonClick}
             disabled={!isPaymentButtonActive}
           >
