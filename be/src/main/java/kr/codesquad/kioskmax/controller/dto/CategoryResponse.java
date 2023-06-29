@@ -19,7 +19,7 @@ public class CategoryResponse {
     private final List<MenuResponse> menuResponses;
 
     @Builder
-    public CategoryResponse(Long id, String name, List<MenuResponse> menuResponses) {
+    private CategoryResponse(Long id, String name, List<MenuResponse> menuResponses) {
         this.id = id;
         this.name = name;
         this.menuResponses = menuResponses;

@@ -46,3 +46,4 @@ INSERT INTO menu_rank (menu_id, sell_at) VALUES
      (8, now()), (8, now()), (8, now()), (8, now()), (8, now()),
      (8, now()), (8, now()), (8, now()), (8, now()), (8, now()),
      (8, now()), (8, now()), (8, now()), (8, now()), (8, now()), (8, now());
+

@@ -1,12 +1,12 @@
 package kr.codesquad.kioskmax.service.dto;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import kr.codesquad.kioskmax.domain.Menu;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -20,7 +20,7 @@ public class MenuInformation {
     private final boolean isPopular;
 
     @Builder
-    public MenuInformation(Long id, Long categoryId, String name, Long price, String imageSrc, boolean isPopular) {
+    private MenuInformation(Long id, Long categoryId, String name, Long price, String imageSrc, boolean isPopular) {
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;

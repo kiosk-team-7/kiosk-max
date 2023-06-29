@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://kiosk-test-rds.ccx0tuiplljr.ap-northeast-2.rds.amazonaws.com:3306/kiosk
+    username: kiosk_tester
+    password: "!kiosk_tester123"

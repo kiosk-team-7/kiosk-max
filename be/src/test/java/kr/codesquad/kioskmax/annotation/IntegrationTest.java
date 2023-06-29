@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -15,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 @AutoConfigureRestDocs(uriHost = "api.kiosk.com", uriPort = 80)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Sql(scripts = {"classpath:schema/schema.sql", "classpath:schema/data.sql"})
 public @interface IntegrationTest {
 
 }
