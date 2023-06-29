@@ -8,6 +8,7 @@ import {
   PaymentSelectionModal,
   PaymentSpinner,
 } from "./Payment";
+import CloseButton from "./CloseButton";
 
 interface CartProps {
   cartItems: CartItem[];
@@ -247,9 +248,7 @@ function CartItem({
         <div>{price}</div>
       </div>
       <div className={styles.ItemCount}>{count}</div>
-      <button className={styles.RemoveButton} onClick={() => removeItem(id)}>
-        X
-      </button>
+      <CloseButton onClick={() => removeItem(id)} />
     </>
   );
 }
