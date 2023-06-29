@@ -11,16 +11,28 @@ export default function App() {
     response.current = res;
   };
 
-  const renderPage = () => {
-    switch (currentPath) {
-      case "/":
-        return <Home changePage={changePage} />;
-      case "/result":
-        return <Result changePage={changePage} response={response.current} />;
-      default:
-        return <Home changePage={changePage} />;
-    }
-  };
+  return (
+    <RenderPage
+      currentPath={currentPath}
+      response={response.current}
+      changePage={changePage}
+    />
+  );
+}
 
-  return <>{renderPage()}</>;
+interface RenderPageProps {
+  currentPath: string;
+  response: ResponseBody | undefined;
+  changePage: (path: Path, res?: ResponseBody) => void;
+}
+
+function RenderPage({ currentPath, response, changePage }: RenderPageProps) {
+  switch (currentPath) {
+    case "/":
+      return <Home changePage={changePage} />;
+    case "/result":
+      return <Result response={response} changePage={changePage} />;
+    default:
+      return <Home changePage={changePage} />;
+  }
 }

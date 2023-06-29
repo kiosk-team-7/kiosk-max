@@ -3,13 +3,13 @@ import styles from "./Result.module.css";
 import { PaymentType } from "../types/constants";
 
 interface ResultPageProps {
-  changePage: (path: Path) => void;
   response: ResponseBody | undefined;
+  changePage: (path: Path) => void;
 }
 
 const WAITING_TIME = 10;
 
-export default function Result({ changePage, response }: ResultPageProps) {
+export default function Result({ response, changePage }: ResultPageProps) {
   const [count, setCount] = useState(WAITING_TIME);
   const isSuccess = response?.status === 200;
 
