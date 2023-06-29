@@ -8,9 +8,8 @@ interface DimProps {
 export default function Dim({ children, onClick }: DimProps) {
   return (
     <div className={styles.DimContainer}>
-      <div className={styles.Dim} onClick={onClick}>
-        {children}
-      </div>
+      <div className={styles.Dim} onClick={onClick}></div>
+      {children}
     </div>
   );
 }
