@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { Size, Temperature } from "../types/constants";
 import styles from "./MenuAddModal.module.css";
 import MenuItem from "./MenuItem";
 import OptionButton from "./OptionButton";
-import { Size, Temperature } from "../types/constants";
 
 interface MenuAddModalProps {
   menu: Menu;
@@ -63,7 +63,9 @@ export default function MenuAddModal({ menu, closeModal, addMenuToCart }: MenuAd
           X
         </div>
         <div className={styles.MenuInfo}>
-          <div className={styles.MenuItemWrapper}>{menu && <MenuItem menu={menu} />}</div>
+          <div className={styles.MenuItemWrapper}>
+            {menu && <MenuItem menu={menu} />}
+          </div>
           <div className={styles.MenuItemOptions}>
             <div className={styles.MenuItemOption}>
               <OptionButton

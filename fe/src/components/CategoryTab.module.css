@@ -2,6 +2,9 @@
   overflow-x: scroll;
   user-select: none;
   flex-shrink: 0;
+  padding: 0.5rem;
+  padding-bottom: 0;
+  border-bottom: 1px solid rgb(220, 220, 220);
 }
 
 .Tab::-webkit-scrollbar,
@@ -12,6 +15,7 @@
 
 .TabContainer {
   display: flex;
+  gap: 0.5rem;
 }
 
 .TabItem {
@@ -22,8 +26,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid black;
-  border-right: 0px;
+  border: 1px solid rgb(220, 220, 220);
+  border-bottom: none;
+  border-radius: 1rem 1rem 0 0;
 }
 
 .CurrentTabItem {
@@ -34,11 +39,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid black;
-  border-right: 0px;
-  color: red;
+  border-radius: 1rem 1rem 0 0;
+  font-weight: bold;
+  background-color: rgba(220, 220, 220, 0.5);
 }
 
-.TabItem:last-child {
-  border-right: 1px solid black;
+.TabItem:hover,
+.CurrentTabItem:hover {
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgba(220, 220, 220, 0.5);
 }
