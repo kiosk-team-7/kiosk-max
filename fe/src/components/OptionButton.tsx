@@ -1,11 +1,11 @@
 import styles from "./OptionButton.module.css";
 
-interface OptionButtonProps {
+type OptionButtonProps = {
   type: "Size" | "Temperature" | "Payment" | "CashInput";
   text: string;
   isSelected?: boolean;
   onClick: () => void;
-}
+};
 
 export default function OptionButton({
   type,

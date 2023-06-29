@@ -2,10 +2,10 @@ import Dim from "./Dim";
 import styles from "./Modal.module.css";
 import CloseButton from "./CloseButton";
 
-interface ModalProps {
+type ModalProps = {
   closeModal?: () => void;
   children: JSX.Element;
-}
+};
 
 export default function Modal({ closeModal, children }: ModalProps) {
   return (

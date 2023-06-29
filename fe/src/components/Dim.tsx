@@ -1,9 +1,9 @@
 import styles from "./Dim.module.css";
 
-interface DimProps {
+type DimProps = {
   children: React.ReactNode;
   onClick?: () => void;
-}
+};
 
 export default function Dim({ children, onClick }: DimProps) {
   return (

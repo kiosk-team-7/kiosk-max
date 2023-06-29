@@ -10,12 +10,12 @@ import {
 } from "./Payment";
 import CloseButton from "./CloseButton";
 
-interface CartProps {
+type CartProps = {
   cartItems: CartItem[];
   removeItem: (id: number) => void;
   removeAllItems: () => void;
   changePage: (path: Path, response: ResponseBody) => void;
-}
+};
 
 interface PaymentRequestBody {
   menus: {
@@ -223,14 +223,14 @@ export default function Cart({
     </section>
   );
 }
-interface CartItemProps {
+type CartItemProps = {
   id: number;
   name: string;
   price: number;
   imageSrc: string;
   count: number;
   removeItem: (id: number) => void;
-}
+};
 
 function CartItem({
   id,
@@ -253,10 +253,10 @@ function CartItem({
   );
 }
 
-interface RemoveAllItemsConfirmationModalProps {
+type RemoveAllItemsConfirmationModalProps = {
   closeModal: () => void;
   removeAllItems: () => void;
-}
+};
 
 function RemoveAllItemsConfirmationModal({
   closeModal,

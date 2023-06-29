@@ -4,11 +4,11 @@ import Modal from "./Modal";
 import OptionButton from "./OptionButton";
 import styles from "./Payment.module.css";
 
-interface PaymentSelectionModalProps {
+type PaymentSelectionModalProps = {
   closeModal: () => void;
   selectCardPayment: () => void;
   selectCashPayment: () => void;
-}
+};
 
 export function PaymentSelectionModal({
   closeModal,
@@ -48,12 +48,12 @@ export function PaymentSpinner() {
   );
 }
 
-interface CashPaymentModalProps {
+type CashPaymentModalProps = {
   totalPrice: number;
   closeModal: () => void;
   requestPayment: (inputAmount: number) => Promise<ResponseBody>;
   changePage: (path: Path, response: ResponseBody) => void;
-}
+};
 
 export function CashPaymentModal({
   totalPrice,

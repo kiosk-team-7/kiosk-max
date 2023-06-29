@@ -4,11 +4,11 @@ import Cart from "./Cart";
 import MenuAddModal from "./MenuAddModal";
 import MenuList from "./MenuList";
 
-interface MainProps {
+type MainProps = {
   menus: Menu[];
   animation: AnimationClass;
   changePage: (path: Path) => void;
-}
+};
 
 export default function Main({ menus, animation, changePage }: MainProps) {
   const [isMenuAddModalOpen, setIsMenuAddModalOpen] = useState(false);

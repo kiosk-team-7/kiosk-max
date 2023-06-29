@@ -5,11 +5,11 @@ import MenuItem from "./MenuItem";
 import OptionButton from "./OptionButton";
 import Modal from "./Modal";
 
-interface MenuAddModalProps {
+type MenuAddModalProps = {
   menu: Menu;
   closeModal: () => void;
   addMenuToCart: (item: CartItem) => void;
-}
+};
 
 export default function MenuAddModal({
   menu,
@@ -116,11 +116,11 @@ export default function MenuAddModal({
   );
 }
 
-interface QuantityCounterProps {
+type QuantityCounterProps = {
   quantity: number;
   handlePlusButtonClick: () => void;
   handleMinusButtonClick: () => void;
-}
+};
 
 function QuantityCounter({
   quantity,
@@ -146,10 +146,10 @@ function QuantityCounter({
   );
 }
 
-interface AddMenuButtonProps {
+type AddMenuButtonProps = {
   isAllOptionsSelected: boolean;
   handleAddMenuButtonClick: () => void;
-}
+};
 
 function AddMenuButton({
   isAllOptionsSelected,

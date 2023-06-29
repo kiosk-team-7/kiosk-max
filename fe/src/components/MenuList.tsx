@@ -2,11 +2,11 @@ import { AnimationClass } from "../types/constants";
 import MenuItem from "./MenuItem";
 import styles from "./MenuList.module.css";
 
-interface MenuListProps {
+type MenuListProps = {
   menus: Menu[];
   handleMenuItemClick: (menu: Menu) => void;
   animation: AnimationClass;
-}
+};
 
 export default function MenuList({
   menus,

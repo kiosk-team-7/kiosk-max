@@ -20,11 +20,11 @@ export default function App() {
   );
 }
 
-interface RenderPageProps {
+type RenderPageProps = {
   currentPath: string;
   response: ResponseBody | undefined;
   changePage: (path: Path, res?: ResponseBody) => void;
-}
+};
 
 function RenderPage({ currentPath, response, changePage }: RenderPageProps) {
   switch (currentPath) {

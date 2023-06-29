@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import styles from "./Result.module.css";
 import { PaymentType } from "../types/constants";
 
-interface ResultPageProps {
+type ResultPageProps = {
   response: ResponseBody | undefined;
   changePage: (path: Path) => void;
-}
+};
 
 const WAITING_TIME = 10;
 

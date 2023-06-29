@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import styles from "./CategoryTab.module.css";
 
-interface CategoryTabProps {
+type CategoryTabProps = {
   categories: string[];
   currentCategoryIndex: number;
   handleCategoryChange: (index: number) => void;
-}
+};
 
 export default function CategoryTab({
   categories,
@@ -95,11 +95,11 @@ export default function CategoryTab({
   );
 }
 
-interface TabItemProps {
+type TabItemProps = {
   name: string;
   isCurrentCategory: boolean;
   handleCategoryChange: () => void;
-}
+};
 
 function TabItem({
   name,

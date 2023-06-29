@@ -1,8 +1,8 @@
 import styles from "./MenuList.module.css";
 
-interface MenuProps {
+type MenuProps = {
   menu: Menu;
-}
+};
 
 export default function MenuItem({ menu }: MenuProps) {
   return (

@@ -5,9 +5,9 @@ import Main from "./Main";
 import { AnimationClass } from "../types/constants";
 import { API_URL } from "../constants";
 
-interface HomeProps {
+type HomeProps = {
   changePage: (path: Path) => void;
-}
+};
 
 interface KioskData {
   id: number;
