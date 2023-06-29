@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Modal from "./Modal";
-import OptionButton from "./MenuAddModal/OptionButton";
+import OptionButton, { ButtonStyle } from "./MenuAddModal/OptionButton";
 import styles from "./Payment.module.css";
 
 type PaymentSelectionModalProps = {
@@ -20,7 +20,7 @@ export function PaymentSelectionModal({
         <div className={styles.PaymentOption}>
           <div className={styles.PaymentIcon}>💳</div>
           <OptionButton
-            type={"Payment"}
+            type={ButtonStyle.PAYMENT}
             text={"카드결제"}
             onClick={selectCardPayment}
           />
@@ -28,7 +28,7 @@ export function PaymentSelectionModal({
         <div className={styles.PaymentOption}>
           <div className={styles.PaymentIcon}>💵</div>
           <OptionButton
-            type={"Payment"}
+            type={ButtonStyle.PAYMENT}
             text={"현금결제"}
             onClick={selectCashPayment}
           />
@@ -74,7 +74,7 @@ export function CashPaymentModal({
           {INPUT_OPTIONS.map((option) => (
             <div key={option} className={styles.InputOption}>
               <OptionButton
-                type={"CashInput"}
+                type={ButtonStyle.CASH_INPUT}
                 text={option + "원"}
                 onClick={() => increaseInputAmount(option)}
               />

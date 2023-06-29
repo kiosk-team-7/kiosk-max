@@ -2,11 +2,18 @@ import Button from "../Button";
 import styles from "./OptionButton.module.css";
 
 type OptionButtonProps = {
-  type: "Size" | "Temperature" | "Payment" | "CashInput";
+  type: ButtonStyle;
   text: string;
   isSelected?: boolean;
   onClick: () => void;
 };
+
+export enum ButtonStyle {
+  SIZE,
+  TEMPERATURE,
+  PAYMENT,
+  CASH_INPUT,
+}
 
 export default function OptionButton({
   type,
@@ -17,16 +24,16 @@ export default function OptionButton({
   let className;
 
   switch (type) {
-    case "Size":
+    case ButtonStyle.SIZE:
       className = styles.Size;
       break;
-    case "Temperature":
+    case ButtonStyle.TEMPERATURE:
       className = styles.Temperature;
       break;
-    case "Payment":
+    case ButtonStyle.PAYMENT:
       className = styles.Payment;
       break;
-    case "CashInput":
+    case ButtonStyle.CASH_INPUT:
       className = styles.CashInput;
       break;
   }
