@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { AnimationClass } from "../types/constants";
-import Cart from "./Cart";
-import MenuAddModal from "./MenuAddModal";
+import { AnimationClass } from "../../types/constants";
+import Cart from "./Cart/Cart";
 import MenuList from "./MenuList";
+import MenuAddModal from "./MenuAddModal/MenuAddModal";
 
-interface MainProps {
+type MainProps = {
   menus: Menu[];
   animation: AnimationClass;
   changePage: (path: Path) => void;
-}
+};
 
 export default function Main({ menus, animation, changePage }: MainProps) {
   const [isMenuAddModalOpen, setIsMenuAddModalOpen] = useState(false);
@@ -27,7 +27,9 @@ export default function Main({ menus, animation, changePage }: MainProps) {
   const reduceCartItems = (cartItems: CartItem[]): CartItem[] => {
     return cartItems.reduce((acc: CartItem[], cartItem: CartItem) => {
       const sameMenu = acc.find(
-        (item) => item.id === cartItem.id && JSON.stringify(item.options) === JSON.stringify(cartItem.options)
+        (item) =>
+          item.id === cartItem.id &&
+          JSON.stringify(item.options) === JSON.stringify(cartItem.options)
       );
 
       if (sameMenu) {
@@ -40,7 +42,8 @@ export default function Main({ menus, animation, changePage }: MainProps) {
     }, []);
   };
 
-  const addMenuToCart = (item: CartItem) => setCartItems(reduceCartItems([...cartItems, item]));
+  const addMenuToCart = (item: CartItem) =>
+    setCartItems(reduceCartItems([...cartItems, item]));
 
   const removeAllItems = () => {
     setCartItems([]);
@@ -52,12 +55,25 @@ export default function Main({ menus, animation, changePage }: MainProps) {
 
   return (
     <>
-      <MenuList menus={menus} handleMenuItemClick={handleMenuItemClick} animation={animation} />
+      <MenuList
+        menus={menus}
+        handleMenuItemClick={handleMenuItemClick}
+        animation={animation}
+      />
       {isMenuAddModalOpen && selectedMenu && (
-        <MenuAddModal menu={selectedMenu} closeModal={closeModal} addMenuToCart={addMenuToCart} />
+        <MenuAddModal
+          menu={selectedMenu}
+          closeModal={closeModal}
+          addMenuToCart={addMenuToCart}
+        />
       )}
       {cartItems.length !== 0 && (
-        <Cart cartItems={cartItems} removeItem={removeItem} removeAllItems={removeAllItems} changePage={changePage} />
+        <Cart
+          cartItems={cartItems}
+          removeItem={removeItem}
+          removeAllItems={removeAllItems}
+          changePage={changePage}
+        />
       )}
     </>
   );

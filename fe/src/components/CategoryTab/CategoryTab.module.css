@@ -1,0 +1,19 @@
+.Tab {
+  overflow-x: scroll;
+  user-select: none;
+  flex-shrink: 0;
+  padding: 0.5rem;
+  padding-bottom: 0;
+  border-bottom: 1px solid rgb(220, 220, 220);
+}
+
+.Tab::-webkit-scrollbar,
+.Tab::-webkit-scrollbar-thumb,
+.Tab::-webkit-scrollbar-track {
+  display: none;
+}
+
+.TabContainer {
+  display: flex;
+  gap: 0.5rem;
+}

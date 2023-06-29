@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { API_URL } from "../constants";
-import { PaymentType, Size, Temperature } from "../types/constants";
+import { API_URL } from "../../../constants";
+import { PaymentType, Size, Temperature } from "../../../types/constants";
+import { Spinner } from "../../Spinner";
+import { CashPaymentModal, PaymentSelectionModal } from "../Payment";
+import ClearConfirmModal from "./ClearConfirmModal";
+import CartItem from "./CartItem";
 import styles from "./Cart.module.css";
-import Modal from "./Modal";
-import { CashPaymentModal, PaymentSelectionModal, PaymentSpinner } from "./Payment";
 
-interface CartProps {
+type CartProps = {
   cartItems: CartItem[];
   removeItem: (id: number) => void;
   removeAllItems: () => void;
   changePage: (path: Path, response: ResponseBody) => void;
-}
+};
 
 interface PaymentRequestBody {
   menus: {
@@ -26,10 +28,15 @@ interface PaymentRequestBody {
 
 const WAITING_TIME = 60;
 
-export default function Cart({ cartItems, removeItem, removeAllItems, changePage }: CartProps) {
+export default function Cart({
+  cartItems,
+  removeItem,
+  removeAllItems,
+  changePage,
+}: CartProps) {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isIndicatorVisible, setIsIndicatorVisible] = useState(false);
-  const [isRemoveAllItemsModalOpen, setIsRemoveAllItemsModalOpen] = useState(false);
+  const [isClearConfirmModalOpen, setIsClearConfirmModalOpen] = useState(false);
   const [isCashPaymentModalOpen, setIsCashPaymentModalOpen] = useState(false);
   const [remainingTime, setRemainingTime] = useState(WAITING_TIME);
   const [prevCartItems, setPrevCartItems] = useState<CartItem[]>(cartItems);
@@ -40,14 +47,24 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
       setRemainingTime((r) => r - 1);
     }, 1000);
 
-    if (isPaymentModalOpen || isCashPaymentModalOpen || isRemoveAllItemsModalOpen || isIndicatorVisible) {
+    if (
+      isPaymentModalOpen ||
+      isCashPaymentModalOpen ||
+      isClearConfirmModalOpen ||
+      isIndicatorVisible
+    ) {
       clearInterval(interval);
     }
 
     return () => {
       clearInterval(interval);
     };
-  }, [isPaymentModalOpen, isIndicatorVisible, isRemoveAllItemsModalOpen, isCashPaymentModalOpen]);
+  }, [
+    isPaymentModalOpen,
+    isIndicatorVisible,
+    isClearConfirmModalOpen,
+    isCashPaymentModalOpen,
+  ]);
 
   useEffect(() => {
     if (remainingTime < 0) {
@@ -61,14 +78,16 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
   }
 
   const openRemoveAllItemsModal = () => {
-    setIsRemoveAllItemsModalOpen(true);
+    setIsClearConfirmModalOpen(true);
   };
 
   const closeRemoveAllItemsModal = () => {
-    setIsRemoveAllItemsModalOpen(false);
+    setIsClearConfirmModalOpen(false);
   };
 
-  const requestPayment = async (inputAmount?: number): Promise<ResponseBody> => {
+  const requestPayment = async (
+    inputAmount?: number
+  ): Promise<ResponseBody> => {
     const body: PaymentRequestBody = {
       menus: cartItems.map((item) => {
         return {
@@ -99,17 +118,20 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     return data;
   };
 
-  const reducedItems = cartItems.reduce((acc: CartItem[], cartItem: CartItem) => {
-    const sameItem = acc.find((item) => item.id === cartItem.id);
+  const reducedItems = cartItems.reduce(
+    (acc: CartItem[], cartItem: CartItem) => {
+      const sameItem = acc.find((item) => item.id === cartItem.id);
 
-    if (sameItem) {
-      sameItem.count += cartItem.count;
-    } else {
-      acc.push({ ...cartItem });
-    }
+      if (sameItem) {
+        sameItem.count += cartItem.count;
+      } else {
+        acc.push({ ...cartItem });
+      }
 
-    return acc;
-  }, []);
+      return acc;
+    },
+    []
+  );
 
   const totalPrice = cartItems.reduce((acc, cartItem) => {
     return acc + cartItem.price * cartItem.count;
@@ -125,15 +147,15 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
 
   const selectCardPayment = async () => {
     paymentTypeRef.current = PaymentType.CARD;
-    setIsIndicatorVisible(true);
 
-    const response = await requestPayment();
+    const response = await requestPaymentWithIndicator();
 
-    setIsIndicatorVisible(false);
     changePage("/result", response);
   };
 
   const selectCashPayment = () => {
+    paymentTypeRef.current = PaymentType.CASH;
+
     closePaymentSelectionModal();
     setIsCashPaymentModalOpen(true);
   };
@@ -142,12 +164,30 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
     setIsCashPaymentModalOpen(false);
   };
 
+  const requestPaymentWithIndicator = async (inputAmount?: number) => {
+    setIsIndicatorVisible(true);
+
+    const response = await requestPayment(inputAmount);
+
+    setIsIndicatorVisible(false);
+
+    return response;
+  };
+
   return (
     <section className={styles.Cart}>
       <div className={styles.ItemSection}>
         <div className={styles.ItemInfo}>
-          <p>주문 수량: 5</p>
-          <p>20000원</p>
+          <p>
+            주문 수량: {reducedItems.reduce((acc, item) => acc + item.count, 0)}
+          </p>
+          <p>
+            {reducedItems.reduce(
+              (acc, item) => acc + item.price * item.count,
+              0
+            )}
+            원
+          </p>
         </div>
         <ul className={styles.ItemContainer}>
           {reducedItems.map((item) => (
@@ -159,15 +199,24 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
       </div>
       <div className={styles.ButtonSection}>
         <div className={styles.Timer}>{remainingTime}초 남음</div>
-        <button className={styles.CancelAllButton} onClick={openRemoveAllItemsModal}>
+        <button
+          className={styles.CancelAllButton}
+          onClick={openRemoveAllItemsModal}
+        >
           전체 취소
         </button>
-        <button className={styles.PaymentButton} onClick={openPaymentSelectionModal}>
+        <button
+          className={styles.PaymentButton}
+          onClick={openPaymentSelectionModal}
+        >
           결제하기
         </button>
       </div>
-      {isRemoveAllItemsModalOpen && (
-        <RemoveAllItemsConfirmationModal closeModal={closeRemoveAllItemsModal} removeAllItems={removeAllItems} />
+      {isClearConfirmModalOpen && (
+        <ClearConfirmModal
+          closeModal={closeRemoveAllItemsModal}
+          removeAllItems={removeAllItems}
+        />
       )}
       {isPaymentModalOpen && (
         <PaymentSelectionModal
@@ -179,64 +228,22 @@ export default function Cart({ cartItems, removeItem, removeAllItems, changePage
       {isCashPaymentModalOpen && (
         <CashPaymentModal
           totalPrice={totalPrice}
-          requestPayment={requestPayment}
+          requestPaymentWithIndicator={requestPaymentWithIndicator}
           changePage={changePage}
           closeModal={closeCashPaymentModal}
         />
       )}
-      {isIndicatorVisible && <PaymentSpinner />}
+      {isIndicatorVisible && (
+        <Spinner
+          content={
+            paymentTypeRef.current === PaymentType.CARD
+              ? "카드 결제 중입니다..."
+              : paymentTypeRef.current === PaymentType.CASH
+              ? "현금 결제 중입니다..."
+              : ""
+          }
+        />
+      )}
     </section>
-  );
-}
-interface CartItemProps {
-  id: number;
-  name: string;
-  price: number;
-  imageSrc: string;
-  count: number;
-  removeItem: (id: number) => void;
-}
-
-function CartItem({ id, name, imageSrc, count, price, removeItem }: CartItemProps) {
-  return (
-    <>
-      <div className={styles.ItemContent}>
-        <img className={styles.ItemImage} src={imageSrc} alt={name} />
-        <div>{name}</div>
-        <div>{price}</div>
-      </div>
-      <div className={styles.ItemCount}>{count}</div>
-      <button className={styles.RemoveButton} onClick={() => removeItem(id)}>
-        X
-      </button>
-    </>
-  );
-}
-
-interface RemoveAllItemsConfirmationModalProps {
-  closeModal: () => void;
-  removeAllItems: () => void;
-}
-
-function RemoveAllItemsConfirmationModal({ closeModal, removeAllItems }: RemoveAllItemsConfirmationModalProps) {
-  const handleConfirmButtonClick = () => {
-    removeAllItems();
-    closeModal();
-  };
-
-  return (
-    <Modal closeModal={closeModal}>
-      <>
-        <div className={styles.ModalContent}>장바구니에 담긴 상품 모두 삭제하시겠습니까?</div>
-        <div className={styles.ButtonContainer}>
-          <button className={styles.ConfirmButton} onClick={handleConfirmButtonClick}>
-            예
-          </button>
-          <button className={styles.CancelButton} onClick={closeModal}>
-            아니오
-          </button>
-        </div>
-      </>
-    </Modal>
   );
 }

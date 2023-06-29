@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import styles from "./Home.module.css";
-import CategoryTab from "./CategoryTab";
-import Main from "./Main";
 import { AnimationClass } from "../types/constants";
 import { API_URL } from "../constants";
+import CategoryTab from "../components/CategoryTab/CategoryTab";
+import Main from "../components/Main/Main";
+import styles from "./Home.module.css";
 
-interface HomeProps {
+type HomeProps = {
   changePage: (path: Path) => void;
-}
+};
 
 interface KioskData {
   id: number;
@@ -18,7 +18,9 @@ interface KioskData {
 export default function Home({ changePage }: HomeProps) {
   const [kioskData, setKioskData] = useState<KioskData[]>([]);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
-  const [animation, setAnimation] = useState<AnimationClass>(AnimationClass.ANIMATE_IN);
+  const [animation, setAnimation] = useState<AnimationClass>(
+    AnimationClass.ANIMATE_IN
+  );
 
   useEffect(() => {
     let ignore = false;
@@ -60,7 +62,11 @@ export default function Home({ changePage }: HomeProps) {
         currentCategoryIndex={currentCategoryIndex}
         handleCategoryChange={handleCategoryChange}
       />
-      <Main menus={currentMenus} animation={animation} changePage={changePage} />
+      <Main
+        menus={currentMenus}
+        animation={animation}
+        changePage={changePage}
+      />
     </div>
   );
 }
