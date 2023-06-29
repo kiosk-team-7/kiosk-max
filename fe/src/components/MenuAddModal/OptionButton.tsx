@@ -1,3 +1,4 @@
+import Button from "../Button";
 import styles from "./OptionButton.module.css";
 
 type OptionButtonProps = {
@@ -14,6 +15,7 @@ export default function OptionButton({
   onClick,
 }: OptionButtonProps) {
   let className;
+
   switch (type) {
     case "Size":
       className = styles.Size;
@@ -33,9 +35,5 @@ export default function OptionButton({
     className += " " + styles.Selected;
   }
 
-  return (
-    <div className={className} onClick={onClick}>
-      <span className={styles.Text}>{text}</span>
-    </div>
-  );
+  return <Button className={className} text={text} onClick={onClick} />;
 }
