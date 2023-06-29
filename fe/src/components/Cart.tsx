@@ -179,8 +179,16 @@ export default function Cart({
     <section className={styles.Cart}>
       <div className={styles.ItemSection}>
         <div className={styles.ItemInfo}>
-          <p>주문 수량: 5</p>
-          <p>20000원</p>
+          <p>
+            주문 수량: {reducedItems.reduce((acc, item) => acc + item.count, 0)}
+          </p>
+          <p>
+            {reducedItems.reduce(
+              (acc, item) => acc + item.price * item.count,
+              0
+            )}
+            원
+          </p>
         </div>
         <ul className={styles.ItemContainer}>
           {reducedItems.map((item) => (
