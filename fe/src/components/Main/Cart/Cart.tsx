@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { API_URL } from "../../../constants";
 import { PaymentType, Size, Temperature } from "../../../types/constants";
-import styles from "./Cart.module.css";
 import { Spinner } from "../../Spinner";
 import { CashPaymentModal, PaymentSelectionModal } from "../Payment";
 import ClearConfirmModal from "./ClearConfirmModal";
 import CartItem from "./CartItem";
+import styles from "./Cart.module.css";
 
 type CartProps = {
   cartItems: CartItem[];
@@ -36,8 +36,7 @@ export default function Cart({
 }: CartProps) {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isIndicatorVisible, setIsIndicatorVisible] = useState(false);
-  const [isRemoveAllItemsModalOpen, setIsRemoveAllItemsModalOpen] =
-    useState(false);
+  const [isClearConfirmModalOpen, setIsClearConfirmModalOpen] = useState(false);
   const [isCashPaymentModalOpen, setIsCashPaymentModalOpen] = useState(false);
   const [remainingTime, setRemainingTime] = useState(WAITING_TIME);
   const [prevCartItems, setPrevCartItems] = useState<CartItem[]>(cartItems);
@@ -51,7 +50,7 @@ export default function Cart({
     if (
       isPaymentModalOpen ||
       isCashPaymentModalOpen ||
-      isRemoveAllItemsModalOpen ||
+      isClearConfirmModalOpen ||
       isIndicatorVisible
     ) {
       clearInterval(interval);
@@ -63,7 +62,7 @@ export default function Cart({
   }, [
     isPaymentModalOpen,
     isIndicatorVisible,
-    isRemoveAllItemsModalOpen,
+    isClearConfirmModalOpen,
     isCashPaymentModalOpen,
   ]);
 
@@ -79,11 +78,11 @@ export default function Cart({
   }
 
   const openRemoveAllItemsModal = () => {
-    setIsRemoveAllItemsModalOpen(true);
+    setIsClearConfirmModalOpen(true);
   };
 
   const closeRemoveAllItemsModal = () => {
-    setIsRemoveAllItemsModalOpen(false);
+    setIsClearConfirmModalOpen(false);
   };
 
   const requestPayment = async (
@@ -213,7 +212,7 @@ export default function Cart({
           결제하기
         </button>
       </div>
-      {isRemoveAllItemsModalOpen && (
+      {isClearConfirmModalOpen && (
         <ClearConfirmModal
           closeModal={closeRemoveAllItemsModal}
           removeAllItems={removeAllItems}

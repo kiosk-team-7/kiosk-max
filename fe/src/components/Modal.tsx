@@ -1,6 +1,6 @@
 import Dim from "./Dim";
-import styles from "./Modal.module.css";
 import CloseButton from "./CloseButton";
+import styles from "./Modal.module.css";
 
 type ModalProps = {
   closeModal?: () => void;

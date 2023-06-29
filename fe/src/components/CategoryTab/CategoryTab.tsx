@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import styles from "./CategoryTab.module.css";
 import TabItem from "./TabItem";
+import styles from "./CategoryTab.module.css";
 
 type CategoryTabProps = {
   categories: string[];

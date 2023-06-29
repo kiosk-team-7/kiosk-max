@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import styles from "./Result.module.css";
 import { PaymentType } from "../types/constants";
+import styles from "./Result.module.css";
 
 type ResultPageProps = {
   response: ResponseBody | undefined;
