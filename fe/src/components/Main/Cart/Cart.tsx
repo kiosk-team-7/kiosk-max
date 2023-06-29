@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { API_URL } from "../../constants";
-import { PaymentType, Size, Temperature } from "../../types/constants";
+import { API_URL } from "../../../constants";
+import { PaymentType, Size, Temperature } from "../../../types/constants";
 import styles from "./Cart.module.css";
-import CloseButton from "./../CloseButton";
-import { Spinner } from "./../Spinner";
-import { CashPaymentModal, PaymentSelectionModal } from "./Payment";
+import CloseButton from "../../CloseButton";
+import { Spinner } from "../../Spinner";
+import { CashPaymentModal, PaymentSelectionModal } from "../Payment";
 import ClearConfirmModal from "./ClearConfirmModal";
 
 type CartProps = {

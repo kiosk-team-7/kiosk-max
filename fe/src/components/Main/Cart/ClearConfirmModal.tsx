@@ -1,4 +1,4 @@
-import Modal from "../Modal";
+import Modal from "../../Modal";
 import styles from "./ClearConfirmModal.module.css";
 
 type ClearConfirmModalProps = {

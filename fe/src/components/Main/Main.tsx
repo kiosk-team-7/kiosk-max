@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Cart from "./Cart";
+import Cart from "./Cart/Cart";
 import MenuList from "./MenuList";
 import MenuAddModal from "./MenuAddModal/MenuAddModal";
 import { AnimationClass } from "../../types/constants";
