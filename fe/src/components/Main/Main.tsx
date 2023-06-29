@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Cart from "./Cart";
 import MenuList from "./MenuList";
-import MenuAddModal from "../MenuAddModal/MenuAddModal";
+import MenuAddModal from "./MenuAddModal/MenuAddModal";
 import { AnimationClass } from "../../types/constants";
 
 type MainProps = {
