@@ -23,27 +23,11 @@ export default function App() {
     response.current = res;
   };
 
-  return (
-    <RenderPage
-      currentPath={currentPath}
-      response={response.current}
-      changePage={changePage}
-    />
-  );
-}
-
-type RenderPageProps = {
-  currentPath: string;
-  response: ResponseBody | undefined;
-  changePage: (path: Path, res?: ResponseBody) => void;
-};
-
-function RenderPage({ currentPath, response, changePage }: RenderPageProps) {
   switch (currentPath) {
     case "/":
       return <Home changePage={changePage} />;
     case "/result":
-      return <Result response={response} changePage={changePage} />;
+      return <Result response={response.current} changePage={changePage} />;
     default:
       return <Home changePage={changePage} />;
   }
