@@ -47,6 +47,10 @@ export default function Home({ changePage }: HomeProps) {
   const currentMenus = kioskData[currentCategoryIndex]?.menus ?? [];
 
   const handleCategoryChange = (index: number) => {
+    if (currentCategoryIndex === index) {
+      return;
+    }
+
     setAnimation(AnimationClass.ANIMATE_OUT);
 
     setTimeout(() => {
