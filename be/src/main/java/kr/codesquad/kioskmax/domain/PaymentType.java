@@ -41,12 +41,12 @@ public enum PaymentType {
 
         private static final Consumer<Double> cardPayment = randomValue ->  {
             try {
+                long waitingTime = (long) (randomValue * 4000 + 3000);
+                Thread.sleep(waitingTime);
+
                 if (randomValue > 0.5) {
                     throw new PaymentTypeCardNotEnoughMoneyException();
                 }
-
-                long waitingTime = (long) (randomValue * 8000 + 3000);
-                Thread.sleep(waitingTime);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

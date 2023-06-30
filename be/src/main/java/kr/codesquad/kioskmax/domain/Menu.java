@@ -17,7 +17,7 @@ public class Menu {
     private final LocalDateTime createdDateTime;
 
     @Builder
-    public Menu(Long id, Long categoryId, String name, Long price, String imageSrc, boolean isPopular,
+    private Menu(Long id, Long categoryId, String name, Long price, String imageSrc, boolean isPopular,
         LocalDateTime createdDateTime) {
         this.id = id;
         this.categoryId = categoryId;

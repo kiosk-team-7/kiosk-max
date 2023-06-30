@@ -12,7 +12,7 @@ public class Category {
     private final LocalDateTime createdDateTime;
 
     @Builder
-    public Category(Long id, String name, LocalDateTime createdDateTime) {
+    private Category(Long id, String name, LocalDateTime createdDateTime) {
         this.id = id;
         this.name = name;
         this.createdDateTime = createdDateTime;

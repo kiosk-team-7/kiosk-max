@@ -4,6 +4,7 @@ import kr.codesquad.kioskmax.annotation.ServiceTest;
 import kr.codesquad.kioskmax.domain.*;
 import kr.codesquad.kioskmax.exception.PaymentTypeCardNotEnoughMoneyException;
 import kr.codesquad.kioskmax.exception.PaymentTypeCashNotEnoughMoneyException;
+import kr.codesquad.kioskmax.repository.MenuRankRepository;
 import kr.codesquad.kioskmax.repository.MenuRepository;
 import kr.codesquad.kioskmax.repository.OrderDetailRepository;
 import kr.codesquad.kioskmax.repository.OrderRepository;
@@ -12,7 +13,6 @@ import kr.codesquad.kioskmax.service.dto.OrderDetailSaveInformation;
 import kr.codesquad.kioskmax.service.dto.OrderInformation;
 import kr.codesquad.kioskmax.service.dto.OrderSaveInformation;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,23 +23,28 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.BDDMockito.any;
-import static org.mockito.BDDMockito.given;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
+import static org.mockito.BDDMockito.*;
 
 @ServiceTest
 public class OrderServiceTest {
 
     @InjectMocks
     private OrderService orderService;
+
+    @Mock
+    private OrderDetailService orderDetailService;
+
     @Mock
     private OrderRepository orderRepository;
-    @Mock
-    private OrderDetailRepository orderDetailRepository;
+
     @Mock
     private MenuRepository menuRepository;
+
     @Mock
     private RandomGenerator randomGenerator;
+
 
     @DisplayName("현금결제시 투입금액이 결제금액이상이면 주문서가 성공적으로 만들어 진다.")
     @Test
@@ -47,9 +52,9 @@ public class OrderServiceTest {
         //given
         given(orderRepository.save(any())).willReturn(10L);
         given(orderRepository.findById(10L)).willReturn(createCashDummyOrder());
-        given(orderDetailRepository.save(any())).willReturn(5L);
-        given(orderDetailRepository.findAllByOrderId(10L)).willReturn(createDummyOrderDetails());
         given(menuRepository.findAll()).willReturn(createDummyMenuList());
+        willDoNothing().given(orderDetailService).save(any(), any(), any());
+        given(orderDetailService.findAllByOrderId(10L)).willReturn(createDummyOrderDetails());
 
         //when
         OrderInformation actual = orderService.save(createDummyCashOrderSaveInformation());
@@ -78,9 +83,9 @@ public class OrderServiceTest {
         given(randomGenerator.getRandom()).willReturn(0.4);
         given(orderRepository.save(any())).willReturn(10L);
         given(orderRepository.findById(10L)).willReturn(createCashDummyOrder());
-        given(orderDetailRepository.save(any())).willReturn(5L);
-        given(orderDetailRepository.findAllByOrderId(10L)).willReturn(createDummyOrderDetails());
         given(menuRepository.findAll()).willReturn(createDummyMenuList());
+        willDoNothing().given(orderDetailService).save(any(), any(), any());
+        given(orderDetailService.findAllByOrderId(10L)).willReturn(createDummyOrderDetails());
 
         //when
         OrderInformation actual = orderService.save(createDummyCardOrderSaveInformation());
@@ -104,14 +109,14 @@ public class OrderServiceTest {
 
     @DisplayName("카드 결제 성공시 3~7초의 대기 시간이 발생한다")
     @Test
-    void waitingTimeValidationTest() {
+    void waitingTimeValidationWhenPaymentEndsSuccessfullyTest() {
         //given
         given(randomGenerator.getRandom()).willReturn(0.25);
         given(orderRepository.save(any())).willReturn(10L);
         given(orderRepository.findById(10L)).willReturn(createCashDummyOrder());
-        given(orderDetailRepository.save(any())).willReturn(5L);
-        given(orderDetailRepository.findAllByOrderId(10L)).willReturn(createDummyOrderDetails());
+        given(orderDetailService.findAllByOrderId(10L)).willReturn(createDummyOrderDetails());
         given(menuRepository.findAll()).willReturn(createDummyMenuList());
+        willDoNothing().given(orderDetailService).save(any(), any(), any());
 
         //when
         long startTime = System.currentTimeMillis();
@@ -120,7 +125,27 @@ public class OrderServiceTest {
         long workingTime = endTime - startTime;
 
         //then
-        assertThat(workingTime).isCloseTo(5000L,within(100L));
+        assertThat(workingTime).isCloseTo(4000L,within(100L));
+
+    }
+
+    @DisplayName("카드 결제 실패시 3~7초의 대기 시간이 발생한다")
+    @Test
+    void waitingTimeValidationWhenPaymentFailsTest() {
+        //given
+        given(randomGenerator.getRandom()).willReturn(0.75);
+
+        //when
+        long startTime = System.currentTimeMillis();
+        try {
+            orderService.save(createDummyCardOrderSaveInformation());
+        } catch(PaymentTypeCardNotEnoughMoneyException e){
+        }
+        long endTime = System.currentTimeMillis();
+        long workingTime = endTime - startTime;
+
+        //then
+        assertThat(workingTime).isCloseTo(6000L,within(100L));
 
     }
 

@@ -1,6 +1,7 @@
 package kr.codesquad.kioskmax.service;
 
 import kr.codesquad.kioskmax.repository.CategoryRepository;
+import kr.codesquad.kioskmax.repository.MenuRankRepository;
 import kr.codesquad.kioskmax.repository.MenuRepository;
 import kr.codesquad.kioskmax.service.dto.CategoryInformation;
 import lombok.RequiredArgsConstructor;
