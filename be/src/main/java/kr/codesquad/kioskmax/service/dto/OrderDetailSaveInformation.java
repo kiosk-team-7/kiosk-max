@@ -1,12 +1,14 @@
 package kr.codesquad.kioskmax.service.dto;
 
-import kr.codesquad.kioskmax.domain.MenuSize;
-import kr.codesquad.kioskmax.domain.MenuTemperature;
-import kr.codesquad.kioskmax.domain.Menus;
-import kr.codesquad.kioskmax.domain.OrderDetail;
+import kr.codesquad.kioskmax.domain.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Getter
 @Setter
@@ -34,6 +36,15 @@ public class OrderDetailSaveInformation {
                 .amount(menus.calculatePrice(menuId, count))
                 .ordersId(orderId)
                 .build();
+    }
+
+    public List<MenuRank> toMenuRanks() {
+        return IntStream.range(0, count)
+                .mapToObj(i -> MenuRank.builder()
+                        .menuId(menuId)
+                        .sellAt(LocalDate.now())
+                        .build())
+                .collect(Collectors.toUnmodifiableList());
     }
 }
 

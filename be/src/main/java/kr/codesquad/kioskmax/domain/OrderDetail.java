@@ -18,7 +18,7 @@ public class OrderDetail {
     private final Long amount;
 
     @Builder
-    public OrderDetail(Long id, Long menuId, Long ordersId, int count, LocalDateTime createAt,
+    private OrderDetail(Long id, Long menuId, Long ordersId, int count, LocalDateTime createAt,
                        MenuSize size, MenuTemperature temperature, Long amount) {
         this.id = id;
         this.menuId = menuId;

@@ -4,7 +4,6 @@ import kr.codesquad.kioskmax.domain.MenuSize;
 import kr.codesquad.kioskmax.domain.MenuTemperature;
 import kr.codesquad.kioskmax.domain.OrderDetail;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;

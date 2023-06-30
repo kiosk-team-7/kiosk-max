@@ -1,5 +1,6 @@
 package kr.codesquad.kioskmax.service.dto;
 
+import kr.codesquad.kioskmax.domain.MenuRank;
 import kr.codesquad.kioskmax.domain.Order;
 import kr.codesquad.kioskmax.domain.PaymentType;
 import lombok.Builder;
@@ -39,5 +40,9 @@ public class OrderSaveInformation {
         return orderDetailSaveInformations.stream()
                 .collect(Collectors.groupingBy(OrderDetailSaveInformation::getMenuId,
                         Collectors.summingInt(OrderDetailSaveInformation::getCount)));
+    }
+
+    public void processPayment(Double randomValue) {
+        paymentType.processPayment(randomValue);
     }
 }
