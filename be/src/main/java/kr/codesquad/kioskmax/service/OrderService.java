@@ -4,7 +4,6 @@ import kr.codesquad.kioskmax.domain.Menus;
 import kr.codesquad.kioskmax.domain.RandomGenerator;
 import kr.codesquad.kioskmax.exception.PaymentTypeCashNotEnoughMoneyException;
 import kr.codesquad.kioskmax.repository.MenuRepository;
-import kr.codesquad.kioskmax.repository.OrderDetailRepository;
 import kr.codesquad.kioskmax.repository.OrderRepository;
 import kr.codesquad.kioskmax.service.dto.OrderInformation;
 import kr.codesquad.kioskmax.service.dto.OrderSaveInformation;
@@ -16,32 +15,28 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OrderService {
 
+    private final OrderDetailService orderDetailService;
     private final OrderRepository orderRepository;
-    private final OrderDetailRepository orderDetailRepository;
     private final MenuRepository menuRepository;
     private final RandomGenerator randomGenerator;
 
     public OrderInformation save(OrderSaveInformation orderSaveInformation) {
-        orderSaveInformation.getPaymentType().processPayment(randomGenerator.getRandom());
+        orderSaveInformation.processPayment(randomGenerator.getRandom());
         Menus menus = new Menus(menuRepository.findAll());
-        long totalPrice = menus.calculateTotalPrice(orderSaveInformation.toMapForMenuIdAndMenuCount());
-        validateTotalPriceBiggerThanInputAmount(orderSaveInformation.getInputAmount(), totalPrice);
+        long totalPrice = calculateTotalPrice(orderSaveInformation, menus);
         long orderId = orderRepository.save(orderSaveInformation.toOrder(totalPrice));
-        saveOrderDetails(orderSaveInformation, orderId, menus);
+        orderDetailService.save(orderId, menus, orderSaveInformation.getOrderDetailSaveInformations());
 
         return OrderInformation.from(orderRepository.findById(orderId),
-                orderDetailRepository.findAllByOrderId(orderId), menus);
+                orderDetailService.findAllByOrderId(orderId), menus);
     }
 
-    private void saveOrderDetails(OrderSaveInformation orderSaveInformation,
-                                  long orderId, Menus menus) {
-        orderSaveInformation.getOrderDetailSaveInformations()
-                .forEach(odsi -> orderDetailRepository.save(odsi.toOrderDetail(orderId, menus)));
-    }
+    private long calculateTotalPrice(OrderSaveInformation orderSaveInformation, Menus menus) {
+        long totalPrice = menus.calculateTotalPrice(orderSaveInformation.toMapForMenuIdAndMenuCount());
 
-    private void validateTotalPriceBiggerThanInputAmount(long inputAmount, long totalPrice) {
-        if (totalPrice > inputAmount) {
+        if (totalPrice > orderSaveInformation.getInputAmount()) {
             throw new PaymentTypeCashNotEnoughMoneyException();
         }
+        return totalPrice;
     }
 }

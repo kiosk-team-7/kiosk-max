@@ -13,15 +13,14 @@ import java.util.List;
 public class OrderResponse {
 
     private final int orderNumber;
-    private final List<OrderDetailInformation> menus;
+    private final List<OrderDetailResponse> menus;
     private final Long inputAmount;
     private final Long totalPrice;
     private final PaymentType paymentType;
     private final Long remain;
 
-
     @Builder
-    private OrderResponse(int orderNumber, List<OrderDetailInformation> menus, Long inputAmount, Long totalPrice, PaymentType paymentType, Long remain) {
+    private OrderResponse(int orderNumber, List<OrderDetailResponse> menus, Long inputAmount, Long totalPrice, PaymentType paymentType, Long remain) {
         this.orderNumber = orderNumber;
         this.menus = menus;
         this.inputAmount = inputAmount;
@@ -33,7 +32,7 @@ public class OrderResponse {
     public static OrderResponse from(OrderInformation orderInformation) {
         return OrderResponse.builder()
                 .orderNumber(orderInformation.getOrderNumber())
-                .menus(orderInformation.getOrderDetailInformations())
+                .menus(OrderDetailResponse.from(orderInformation.getOrderDetailInformations()))
                 .inputAmount(orderInformation.getInputAmount())
                 .totalPrice(orderInformation.getTotalPrice())
                 .paymentType(orderInformation.getPaymentType())

@@ -13,8 +13,7 @@ import java.util.List;
 @Setter
 public class OrderSaveRequest {
 
-    @JsonProperty("menus")
-    private final List<OrderDetailSaveRequest> orderDetailSaveRequests;
+    private final List<OrderDetailSaveRequest> menus;
     private final Long inputAmount;
     private final Long totalPrice;
     private final PaymentType paymentType;
@@ -22,7 +21,7 @@ public class OrderSaveRequest {
     @Builder
     private OrderSaveRequest(List<OrderDetailSaveRequest> orderDetailSaveRequests, Long inputAmount,
                              Long totalPrice, PaymentType paymentType) {
-        this.orderDetailSaveRequests = orderDetailSaveRequests;
+        this.menus = orderDetailSaveRequests;
         this.inputAmount = inputAmount;
         this.totalPrice = totalPrice;
         this.paymentType = paymentType;
@@ -30,7 +29,7 @@ public class OrderSaveRequest {
 
     public OrderSaveInformation toOrderSaveInformation() {
         return OrderSaveInformation.builder()
-                .orderDetailSaveInformations(OrderDetailSaveRequest.toOrderDetailSaveInformation(orderDetailSaveRequests))
+                .orderDetailSaveInformations(OrderDetailSaveRequest.toOrderDetailSaveInformation(menus))
                 .inputAmount(inputAmount)
                 .totalPrice(totalPrice)
                 .paymentType(paymentType)
