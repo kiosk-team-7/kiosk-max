@@ -22,7 +22,7 @@ class MenuRepositoryTest {
 
 	@DisplayName("특정 카테고리에 해당하는 메뉴를 판매순으로 정렬한후 모든 메뉴를 반환한다.")
 	@Test
-	void findAll() {
+	void findAllTest() {
 		//given
 
 		//when
